@@ -45,6 +45,7 @@ public class LeerHuella extends CapturarHuella{
     private DPFPFeatureSet caracteristicas = null;
      private boolean BUSCAR = false;
      public int ID=0;
+     boolean verificar_fecha=false;
       menu1 menu = new menu1();
     public LeerHuella(java.awt.Dialog parent, boolean modal) {
     
@@ -99,7 +100,22 @@ public class LeerHuella extends CapturarHuella{
                                 System.out.println("HUELLA ES DE "+rs.getString("Nombre"));
                                  encontrado = false;
                                 setBUSCAR(false);
-                                
+                                 String sqlr = "select Empleado_Id_Usuario FROM historialempleado WHERE Fecha = CURDATE()";
+                    conectar conr = new conectar();
+                    Connection conexionr = conr.conexion();
+                    
+                    Statement sr = conexion.createStatement();
+                    ResultSet rsr = sr.executeQuery(sqlr);    
+                    while(rsr.next()){
+                       
+                    if(rsr.getInt(1)==ID){
+                      verificar_fecha=true;
+                    }
+                  
+                    }
+                    
+                    
+                    if(verificar_fecha==false){
                              
                 String sql1 = " call historialEmpleado(?)";
                 
@@ -111,7 +127,7 @@ public class LeerHuella extends CapturarHuella{
                 
                  pst.executeUpdate();
                 
-                
+                    }
                 
             this.setVisible(false);
                                 obj.setVisible(true);

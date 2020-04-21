@@ -58,10 +58,10 @@ public class Membresia extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         
-         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
-
+cargar();
 jComboBox1.removeAllItems();
  jComboBox1.addItem ("Mensual");
           jComboBox1.addItem ("Bimestral");
@@ -69,6 +69,34 @@ jComboBox1.removeAllItems();
           jComboBox1.addItem ("Mensual Niños");
         
     }
+    void cargar() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel4.getWidth(), jLabel4.getHeight(), Image.SCALE_DEFAULT));
+                jLabel4.setText(null);
+                jLabel4.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
       public void mostrar(){
      try {
          DefaultTableModel modelo= new DefaultTableModel();
@@ -240,6 +268,7 @@ jLabel1.setText("Tu membresia ha terminado");
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -308,6 +337,9 @@ jLabel1.setText("Tu membresia ha terminado");
         jLabel13.setText("Membresia");
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, -1, -1));
 
+        jLabel4.setText("jLabel4");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
         label_imagen.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -318,7 +350,7 @@ jLabel1.setText("Tu membresia ha terminado");
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 30));
 
         jLabel15.setForeground(new java.awt.Color(250, 234, 128));
         jLabel15.setText("Membresia");
@@ -493,6 +525,7 @@ subir_imagen_clentes obj=new  subir_imagen_clentes() ;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     public javax.swing.JLabel jLabel7;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;

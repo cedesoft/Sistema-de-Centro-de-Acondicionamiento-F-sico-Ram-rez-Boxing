@@ -8,11 +8,15 @@ package Ventanas;
 import static Ventanas.subir_imagen.decodeToImage;
 import clases.LeerHuella;
 import clases.LeerHuella_Administradores;
+import clases.LeerHuella_Administradores_verificar;
 import clases.LeerHuella_Clientes;
+import clases.LeerHuella_Clientes_salir;
+import clases.LeerHuella_Clientes_verificar;
 import clases.LeerHuella_Medidas;
 import clases.LeerHuella_Rutinas;
 
 import java.awt.Desktop;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -45,7 +49,7 @@ public class Menu_1 extends javax.swing.JFrame {
      */ conectar cc = new conectar();
     Connection conexion = cc.conexion();
      ImageIcon icon = null;
-    
+   boolean verificar_fecha=false;
    
     int ID;
     
@@ -56,9 +60,13 @@ public class Menu_1 extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         
-        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/exit.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
+this.repaint();
+ fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+ icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen1.getWidth(), label_imagen1.getHeight(), Image.SCALE_DEFAULT));
+label_imagen1.setIcon(icono);
 this.repaint();
 fot = new ImageIcon(getClass().getResource("/imagenes1/cliente.png"));
 icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel4.getWidth(), jLabel4.getHeight(), Image.SCALE_DEFAULT));
@@ -70,7 +78,7 @@ icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel5.getWidth(), jLabe
 jLabel5.setIcon(icono);
 
 this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/vision.png"));
+fot = new ImageIcon(getClass().getResource("/imagenes1/info.png"));
 icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel6.getWidth(), jLabel6.getHeight(), Image.SCALE_DEFAULT));
 jLabel6.setIcon(icono);
 
@@ -82,7 +90,7 @@ jLabel8.setIcon(icono);
 
 this.repaint();
 
-fot = new ImageIcon(getClass().getResource("/imagenes1/levantamiento-de-pesas.png"));
+fot = new ImageIcon(getClass().getResource("/imagenes1/gimnasio.png"));
 icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel7.getWidth(), jLabel7.getHeight(), Image.SCALE_DEFAULT));
 jLabel7.setIcon(icono);
 
@@ -92,13 +100,46 @@ icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel9.getWidth(), jLabe
 jLabel9.setIcon(icono);
 
 this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/correo-simbolo-de-sobre-negro.png"));
+fot = new ImageIcon(getClass().getResource("/imagenes1/exit.png"));
 icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel12.getWidth(), jLabel12.getHeight(), Image.SCALE_DEFAULT));
 jLabel12.setIcon(icono);
 
 this.repaint();
+fot = new ImageIcon(getClass().getResource("/imagenes1/tomboy.png"));
+icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel10.getWidth(), jLabel10.getHeight(), Image.SCALE_DEFAULT));
+jLabel10.setIcon(icono);
+
+this.repaint();
 
         cargar();
+        cargarf();
+    }
+    void cargarf() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel11.getWidth(), jLabel11.getHeight(), Image.SCALE_DEFAULT));
+                jLabel11.setText(null);
+                jLabel11.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
      void cargar1() {
         BufferedImage img = null;
@@ -189,9 +230,12 @@ this.repaint();
         jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        label_imagen1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -237,7 +281,7 @@ this.repaint();
                 jLabel6MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 130, 110));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 100, 100));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/carrito-de-tienda.png"))); // NOI18N
@@ -288,9 +332,16 @@ this.repaint();
                 jLabel12MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 130, 110));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, 130, 110));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/carrito-de-tienda.png"))); // NOI18N
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 130, 110));
 
         label_imagen.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -300,7 +351,12 @@ this.repaint();
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel2.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 0, 50, 50));
+
+        jLabel11.setText("jLabel11");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
         jLabel15.setForeground(new java.awt.Color(250, 234, 128));
         jLabel15.setText("RFC: RUPG9101103U0");
@@ -309,6 +365,13 @@ this.repaint();
         jLabel16.setForeground(new java.awt.Color(250, 234, 128));
         jLabel16.setText("Menu");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, -1, -1));
+
+        label_imagen1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_imagen1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(label_imagen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -326,8 +389,51 @@ this.repaint();
 
     private void label_imagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_imagenMouseClicked
  int dialog=JOptionPane.YES_NO_OPTION;
-        int result=JOptionPane.showConfirmDialog(null, "¿Desea Salir?","Exit",dialog);
+        int result=JOptionPane.showConfirmDialog(null, "¿Quieres registrar tu salida?","Exit",dialog);
         if (result==0) {
+             String sqlr = "select Empleado_Id_Usuario FROM historialempleado WHERE Fecha = CURDATE() AND Accion = 'Salida'";
+                    conectar conr = new conectar();
+                    Connection conexionr = conr.conexion();
+                    
+                    Statement sr;
+         try {
+             sr = conexion.createStatement();
+              ResultSet rsr = sr.executeQuery(sqlr);    
+                    while(rsr.next()){
+                       
+                    if(rsr.getInt(1)==ID){
+                      verificar_fecha = true;
+                    }
+               
+                    }
+         } catch (SQLException ex) {
+             Logger.getLogger(Salida.class.getName()).log(Level.SEVERE, null, ex);
+         }
+                   
+                    
+                    
+                    if(verificar_fecha==false){
+            String sql = "";
+       sql = "INSERT INTO historialempleado (Fecha, Hora, Empleado_Id_Usuario, Accion) VALUES (CURDATE(),CURTIME(),?,'Salida')";
+        try {
+
+            PreparedStatement pst = conexion.prepareStatement(sql);
+        ;
+            pst.setInt(1, ID);
+           
+           
+            
+            int n = pst.executeUpdate();
+            if (n > 0) {
+                JOptionPane.showMessageDialog(null, "La salida se ha registrado");
+               
+               
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al insertar el registro.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException | HeadlessException e) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, e);
+        }}
             System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_label_imagenMouseClicked
     }
@@ -391,11 +497,11 @@ cargar1();// TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
- Clientes obj=new  Clientes() ;
-                      obj.jLabel2.setText(Integer.toString(ID));
- 
-        obj.setVisible(true); 
-        this.setVisible(false);
+   LeerHuella_Clientes_verificar lh = new LeerHuella_Clientes_verificar(null, true,ID);
+        lh.setBUSCAR(true);
+        lh.setVisible(true);
+        this.setVisible(false);   
+        lh.stop(); 
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseClicked
 
@@ -459,19 +565,35 @@ LeerHuella_Medidas lh = new LeerHuella_Medidas(null, true);
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        LeerHuella_Clientes_salir lh = new LeerHuella_Clientes_salir(null, true);
+        lh.id2(ID);
+        lh.setBUSCAR(true);
+        lh.setVisible(true);
+        this.setVisible(false);   
+        lh.stop();
 
-        Mensajes obj=new  Mensajes() ;
-        obj.jLabel2.setText(Integer.toString(ID));
-
-        obj.setVisible(true);
-        this.setVisible(false);        // TODO add your handling code here:
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel12MouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+ ver_tareas obj=new  ver_tareas() ;
+                      obj.jLabel2.setText(Integer.toString(ID));
+ 
+        obj.setVisible(true);
+        this.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void label_imagen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_imagen1MouseClicked
+  int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea Salir?", "Exit", dialog);
+        if (result == 0) {
+            System.exit(0); }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_label_imagen1MouseClicked
     
-    /**
-     * @param args the command line arguments
-     */
+   
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -506,6 +628,8 @@ LeerHuella_Medidas lh = new LeerHuella_Medidas(null, true);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel16;
@@ -520,5 +644,6 @@ LeerHuella_Medidas lh = new LeerHuella_Medidas(null, true);
     public javax.swing.JPanel jPanel1;
     public static javax.swing.JPanel jPanel2;
     private javax.swing.JLabel label_imagen;
+    private javax.swing.JLabel label_imagen1;
     // End of variables declaration//GEN-END:variables
 }

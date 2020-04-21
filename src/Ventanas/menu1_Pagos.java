@@ -10,9 +10,19 @@ import clases.LeerHuella_Administradores;
 import clases.LeerHuella_Clientes;
 import clases.LeerHuella_Pagos;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import sun.misc.BASE64Decoder;
 
 /**
  *
@@ -20,13 +30,15 @@ import javax.swing.JOptionPane;
  */
 public class menu1_Pagos extends javax.swing.JFrame {
 int ID=0;
+ conectar cc = new conectar();
+    Connection conexion = cc.conexion();
     /**
      * Creates new form menu1
      */
     public menu1_Pagos() {
         initComponents();
          this.setLocationRelativeTo(null);
-           ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+           ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
 
@@ -42,6 +54,49 @@ icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel2.getWidth(), jLabe
 jLabel2.setIcon(icono);
 
 this.repaint();
+cargarf();
+    }
+ void cargarf() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel4.getWidth(), jLabel4.getHeight(), Image.SCALE_DEFAULT));
+                jLabel4.setText(null);
+                jLabel4.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+ public static BufferedImage decodeToImage(String imageString) {
+
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
     /**
@@ -58,6 +113,7 @@ this.repaint();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -93,6 +149,9 @@ this.repaint();
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 180, 170));
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 30, 10));
 
+        jLabel4.setText("jLabel4");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 260));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 360, 260));
 
         label_imagen.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -100,7 +159,7 @@ this.repaint();
                 label_imagenMouseClicked(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 20, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 30));
 
         jLabel15.setForeground(new java.awt.Color(250, 234, 128));
         jLabel15.setText("Menu");
@@ -121,13 +180,14 @@ this.repaint();
     }// </editor-fold>//GEN-END:initComponents
 
     private void label_imagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_imagenMouseClicked
- int dialog=JOptionPane.YES_NO_OPTION;
-        int result=JOptionPane.showConfirmDialog(null, "¿Desea Salir al login?","Exit",dialog);
-        if (result==0) {
+ 
             
-System.exit(0);        // TODO add your handling code here:
+ Menu_11 obj = new Menu_11();
+        obj.jLabel2.setText(Integer.toString(ID));
+        obj.setVisible(true);
+        this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_label_imagenMouseClicked
-    }
+    
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
 
 LeerHuella_Pagos lh = new LeerHuella_Pagos(null, true);
@@ -194,6 +254,7 @@ this.ID = Integer.valueOf(jLabel3.getText());        // TODO add your handling c
     public javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel label_imagen;

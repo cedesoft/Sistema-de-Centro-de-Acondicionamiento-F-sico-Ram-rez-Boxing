@@ -59,8 +59,36 @@ label_imagen.setIcon(icono);
 
 
 this.repaint();
-        
+        cargarf();
     }
+    void cargarf() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel7.getWidth(), jLabel7.getHeight(), Image.SCALE_DEFAULT));
+                jLabel7.setText(null);
+                jLabel7.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public static BufferedImage decodeToImage(String imageString) {
 
         BufferedImage image = null;
@@ -202,6 +230,7 @@ this.repaint();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -252,6 +281,9 @@ this.repaint();
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 180, 100));
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 30, 10));
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 40, 10));
+
+        jLabel7.setText("jLabel7");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 260));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
@@ -383,6 +415,7 @@ cargar();
     private javax.swing.JLabel jLabel4;
     public javax.swing.JLabel jLabel5;
     public javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;

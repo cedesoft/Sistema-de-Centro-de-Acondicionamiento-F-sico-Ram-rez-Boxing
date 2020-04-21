@@ -17,7 +17,7 @@ public class conectar {
      {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conect = DriverManager.getConnection("jdbc:mysql://localhost/ramirezboxingclub", "root", "1234");
+            conect = DriverManager.getConnection("jdbc:mysql://localhost/ramirezboxingclub", "root","1234");
           //  JOptionPane.showMessageDialog(null, "Conectado");
        
       } catch (ClassNotFoundException | SQLException e) {

@@ -62,10 +62,10 @@ public class Medidas extends javax.swing.JFrame {
         
         initComponents();
         this.setLocationRelativeTo(null);
-        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
-
+cargar();
 id();
 
 
@@ -73,6 +73,48 @@ id();
          mostrar();
          
         
+    }
+    void cargar() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_DEFAULT));
+                jLabel1.setText(null);
+                jLabel1.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+public static BufferedImage decodeToImage(String imageString) {
+
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
     }
     public void desactivar(){
     if(jTextField14.getText().length()==0||jTextField15.getText().length()==0||jTextField16.getText().length()==0||jTextField17.getText().length()==0||jTextField18.getText().length()==0){
@@ -185,25 +227,7 @@ id();
 
         
     }
-      public static BufferedImage decodeToImage(String imageString) {
-   byte[] imageByte=null;
-          
-     BufferedImage image = null;
-     BASE64Decoder decoder= null;
-               ByteArrayInputStream bis = null;
-               String imagen_string = null;
-
-        
-        try {
-             decoder = new BASE64Decoder();
-            imageByte = decoder.decodeBuffer(imageString);
-             bis = new ByteArrayInputStream(imageByte);
-            image = ImageIO.read(bis);
-            bis.close();
-        } catch (IOException e) {
-        }
-        return image;
-    }
+      
      public void eliminar(){
         DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
         int a = jTable1.getRowCount()-1;
@@ -365,8 +389,6 @@ id();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField14 = new javax.swing.JTextField();
@@ -379,6 +401,10 @@ id();
         jTextField17 = new javax.swing.JTextField();
         jTextField18 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
 
@@ -416,6 +442,84 @@ id();
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, -1, -1));
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 40, 10));
+
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/avatar.png"))); // NOI18N
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 130));
+
+        jTextField14.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField14KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField14KeyTyped(evt);
+            }
+        });
+        jPanel2.add(jTextField14, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 140, -1));
+
+        jLabel18.setText("Med_Biceps");
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
+
+        jLabel14.setText("Med_Pecho");
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
+
+        jTextField15.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField15KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField15KeyTyped(evt);
+            }
+        });
+        jPanel2.add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 140, -1));
+
+        jLabel15.setText("Med_Pierna");
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, -1, -1));
+
+        jTextField16.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField16KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField16KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField16KeyTyped(evt);
+            }
+        });
+        jPanel2.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 140, -1));
+
+        jLabel16.setText("Med_Pantorrila");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, -1, -1));
+
+        jTextField17.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField17KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField17KeyTyped(evt);
+            }
+        });
+        jPanel2.add(jTextField17, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 140, -1));
+
+        jTextField18.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField18KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField18KeyTyped(evt);
+            }
+        });
+        jPanel2.add(jTextField18, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 140, -1));
+
+        jLabel17.setText("Med_Abdomen");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -430,70 +534,12 @@ id();
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, -1, -1));
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 40, 10));
+        jScrollPane2.setViewportView(jScrollPane1);
 
-        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/avatar.png"))); // NOI18N
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 130));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 510, 300));
 
-        jTextField14.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField14KeyTyped(evt);
-            }
-        });
-        jPanel2.add(jTextField14, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 140, -1));
-
-        jLabel18.setText("Med_Biceps");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
-
-        jLabel14.setText("Med_Pecho");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
-
-        jTextField15.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField15KeyTyped(evt);
-            }
-        });
-        jPanel2.add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 140, -1));
-
-        jLabel15.setText("Med_Pierna");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, -1, -1));
-
-        jTextField16.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField16KeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField16KeyTyped(evt);
-            }
-        });
-        jPanel2.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 140, -1));
-
-        jLabel16.setText("Med_Pantorrila");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, -1, -1));
-
-        jTextField17.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField17KeyTyped(evt);
-            }
-        });
-        jPanel2.add(jTextField17, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 140, -1));
-
-        jTextField18.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField18KeyTyped(evt);
-            }
-        });
-        jPanel2.add(jTextField18, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 140, -1));
-
-        jLabel17.setText("Med_Abdomen");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, -1, -1));
+        jLabel1.setText("jLabel1");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
@@ -505,7 +551,7 @@ id();
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 30));
 
         jLabel19.setForeground(new java.awt.Color(250, 234, 128));
         jLabel19.setText("Medidas");
@@ -651,6 +697,41 @@ desactivar();       // TODO add your handling code here:
         char c = evt.getKeyChar();
         if((c<'0'||c>'9')&&c>'.')evt.consume();        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField18KeyTyped
+
+    private void jTextField14KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField14KeyReleased
+        if (!jTextField14.getText().matches("^[0-9.]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField14.setText("");
+        }
+    }//GEN-LAST:event_jTextField14KeyReleased
+
+    private void jTextField15KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField15KeyReleased
+        if (!jTextField15.getText().matches("^[0-9.]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField15.setText("");
+        }
+    }//GEN-LAST:event_jTextField15KeyReleased
+
+    private void jTextField16KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField16KeyReleased
+        if (!jTextField16.getText().matches("^[0-9.]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField16.setText("");
+        }
+    }//GEN-LAST:event_jTextField16KeyReleased
+
+    private void jTextField17KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField17KeyReleased
+        if (!jTextField17.getText().matches("^[0-9.]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField17.setText("");
+        }
+    }//GEN-LAST:event_jTextField17KeyReleased
+
+    private void jTextField18KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField18KeyReleased
+        if (!jTextField18.getText().matches("^[0-9.]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField18.setText("");
+        }
+    }//GEN-LAST:event_jTextField18KeyReleased
     
     /**
      * @param args the command line arguments
@@ -720,6 +801,7 @@ desactivar();       // TODO add your handling code here:
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -732,6 +814,7 @@ desactivar();       // TODO add your handling code here:
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;

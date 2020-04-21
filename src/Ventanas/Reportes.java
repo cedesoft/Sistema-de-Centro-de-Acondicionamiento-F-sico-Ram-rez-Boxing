@@ -67,16 +67,16 @@ public class Reportes extends javax.swing.JFrame {
     Connection conexion = cc.conexion();
     Statement statement= null;
     boolean valor= false;
-    
+    int contador=0;
             Statement pst= null;
     public Reportes() {
         
         initComponents();
         this.setLocationRelativeTo(null);
-        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
-
+cargar();
 
             
           
@@ -86,6 +86,48 @@ label_imagen.setIcon(icono);
     
   
     
+     void cargar() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_DEFAULT));
+                jLabel1.setText(null);
+                jLabel1.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+public static BufferedImage decodeToImage(String imageString) {
+
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
     
     
     
@@ -140,16 +182,17 @@ label_imagen.setIcon(icono);
       parrafo = new Paragraph("Ramirez Boxing club");       // Este codigo genera una tabla de 3 columnas
           
     // Este codigo genera una tabla de 3 columnas
-    PdfPTable table = new PdfPTable(4);
+    PdfPTable table = new PdfPTable(5);
     table.addCell("Nombre");
     table.addCell("Apellidos");
     table.addCell("Fecha");
     table.addCell("Hora");
+     table.addCell("Accion");
    
    
     // addCell() agrega una celda a la tabla, el cambio de fila
     // ocurre automaticamente al llenar la fila
-     String sql1= "select cliente.Nombre, cliente.Apellidos, Fecha, Hora from historialcliente INNER JOIN cliente ON Cliente_Id_Cliente = cliente.Id_Cliente  where  Fecha >'"+diferencia+"'";
+     String sql1= "select cliente.Nombre, cliente.Apellidos, Fecha, Hora, Accion from historialcliente INNER JOIN cliente ON Cliente_Id_Cliente = cliente.Id_Cliente  where  Fecha >'"+diferencia+"'";
          try {
             
             Statement s = conexion.createStatement();
@@ -162,12 +205,24 @@ label_imagen.setIcon(icono);
                 
                 table.addCell(rs.getString(3));
                 table.addCell(rs.getString(4));
+                 table.addCell(rs.getString(5));
                 
                 
                                 
             }
             
+            String sql3= "select COUNT(*) from historialcliente INNER JOIN cliente ON Cliente_Id_Cliente = cliente.Id_Cliente  where  Fecha >'"+diferencia+"' AND Accion= 'Entrada'";
             
+            
+            
+            
+            s = conexion.createStatement();
+          rs = s.executeQuery(sql3);
+            
+            while(rs.next()){
+       contador=rs.getInt(1);   
+       
+            }
           
     }   catch (SQLException ex) {
         Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
@@ -179,8 +234,13 @@ label_imagen.setIcon(icono);
           PdfPCell celdaFinal = new PdfPCell(new Paragraph("Total: "+result+""));
              
             // Indicamos cuantas columnas ocupa la celda
-            celdaFinal.setColspan(4);
+            celdaFinal.setColspan(5);
             table.addCell(celdaFinal);
+             PdfPCell celdaFinal1 = new PdfPCell(new Paragraph("Total de clientes: "+contador+""));
+             
+            // Indicamos cuantas columnas ocupa la celda
+            celdaFinal1.setColspan(5);
+            table.addCell(celdaFinal1);
          document.add(table);
          
             
@@ -252,15 +312,15 @@ label_imagen.setIcon(icono);
     modelo.addColumn("Apellidos");
     modelo.addColumn("Fecha");
     modelo.addColumn("Hora");
-     
+      modelo.addColumn("Accion");
     
     
     jTable1.setModel(modelo);
     
    
-    String sql1= "select cliente.Nombre, cliente.Apellidos, Fecha, Hora from historialcliente INNER JOIN cliente ON Cliente_Id_Cliente = cliente.Id_Cliente  where  Fecha >'"+diferencia+"'";
+    String sql1= "select cliente.Nombre, cliente.Apellidos, Fecha, Hora, Accion from historialcliente INNER JOIN cliente ON Cliente_Id_Cliente = cliente.Id_Cliente  where  Fecha >'"+diferencia+"'";
         
-       Object [] datos = new Object[4];
+       Object [] datos = new Object[5];
          
         
         try{ 
@@ -273,6 +333,7 @@ label_imagen.setIcon(icono);
                 datos[1]=rs.getString(2);
                 datos[2]=rs.getString(3);
                 datos[3]=rs.getString(4);
+                  datos[4]=rs.getString(5);
                
                 
 
@@ -281,7 +342,19 @@ label_imagen.setIcon(icono);
             }
             
             jTable1.setModel(modelo);
-           
+         String sql3= "select COUNT(*) from historialcliente INNER JOIN cliente ON Cliente_Id_Cliente = cliente.Id_Cliente  where  Fecha >'"+diferencia+"' AND Accion= 'Entrada'";
+            
+            
+            
+            
+            s = conexion.createStatement();
+          rs = s.executeQuery(sql3);
+            
+            while(rs.next()){
+       contador=rs.getInt(1);   
+       
+            }  
+             jLabel10.setText(String.valueOf("Total de clientes: "+contador));
          
         } catch (SQLException ex) {
             Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
@@ -349,16 +422,17 @@ label_imagen.setIcon(icono);
       parrafo = new Paragraph("Ramirez Boxing club");       // Este codigo genera una tabla de 3 columnas
           
     // Este codigo genera una tabla de 3 columnas
-    PdfPTable table = new PdfPTable(4);
+    PdfPTable table = new PdfPTable(5);
     table.addCell("Nombre");
     table.addCell("Apellidos");
     table.addCell("Fecha");
     table.addCell("Hora");
+       table.addCell("Accion");
    
    
     // addCell() agrega una celda a la tabla, el cambio de fila
     // ocurre automaticamente al llenar la fila
-     String sql1= "select empleado.Nombre, empleado.Apellidos, Fecha, Hora from historialempleado INNER JOIN empleado ON Empleado_Id_Usuario = empleado.Id_Usuario  where  Fecha >'"+diferencia+"'";
+     String sql1= "select empleado.Nombre, empleado.Apellidos, Fecha, Hora, Accion from historialempleado INNER JOIN empleado ON Empleado_Id_Usuario = empleado.Id_Usuario  where  Fecha >'"+diferencia+"'";
          try {
             
             Statement s = conexion.createStatement();
@@ -371,6 +445,7 @@ label_imagen.setIcon(icono);
                 
                 table.addCell(rs.getString(3));
                 table.addCell(rs.getString(4));
+                table.addCell(rs.getString(5));
                 
                 
                                 
@@ -388,7 +463,7 @@ label_imagen.setIcon(icono);
           PdfPCell celdaFinal = new PdfPCell(new Paragraph("Total: "+result+""));
              
             // Indicamos cuantas columnas ocupa la celda
-            celdaFinal.setColspan(4);
+            celdaFinal.setColspan(5);
             table.addCell(celdaFinal);
          document.add(table);
          
@@ -461,15 +536,16 @@ label_imagen.setIcon(icono);
     modelo.addColumn("Apellidos");
     modelo.addColumn("Fecha");
     modelo.addColumn("Hora");
+        modelo.addColumn("Accion");
      
     
     
     jTable1.setModel(modelo);
     
    
-     String sql1= "select empleado.Nombre, empleado.Apellidos, Fecha, Hora from historialempleado INNER JOIN empleado ON Empleado_Id_Usuario = empleado.Id_Usuario  where  Fecha >'"+diferencia+"'";
+     String sql1= "select empleado.Nombre, empleado.Apellidos, Fecha, Hora, Accion from historialempleado INNER JOIN empleado ON Empleado_Id_Usuario = empleado.Id_Usuario  where  Fecha >'"+diferencia+"'";
         
-       Object [] datos = new Object[4];
+       Object [] datos = new Object[5];
          
         
         try{ 
@@ -482,6 +558,7 @@ label_imagen.setIcon(icono);
                 datos[1]=rs.getString(2);
                 datos[2]=rs.getString(3);
                 datos[3]=rs.getString(4);
+                 datos[4]=rs.getString(5);
                
                 
 
@@ -564,16 +641,18 @@ label_imagen.setIcon(icono);
       parrafo = new Paragraph("Ramirez Boxing club");       // Este codigo genera una tabla de 3 columnas
           
     // Este codigo genera una tabla de 3 columnas
-    PdfPTable table = new PdfPTable(4);
+    PdfPTable table = new PdfPTable(6);
     table.addCell("Nombre_Compañia");
     table.addCell("Nombre_Proveedor");
     table.addCell("Cantidad_Dinero");
     table.addCell("Fecha_Pago");
-   
+    table.addCell("Cantidad_producto");
+     table.addCell("Nombre_Producto");
+    
    
     // addCell() agrega una celda a la tabla, el cambio de fila
     // ocurre automaticamente al llenar la fila
-     String sql1= "select proveedor.Nombre_Compañia, proveedor.Nombre_Proveedor, Cantidad_Dinero, Fecha_Pago from pagos_provedor INNER JOIN proveedor ON Proveedor_Id_Provedor = proveedor.Id_Provedor  where  Fecha_Pago >'"+diferencia+"'";
+    String sql1= "select proveedor.Nombre_Compañia, proveedor.Nombre_Proveedor, Cantidad_Dinero, Fecha_Pago, pagos_provedor.Cantidad_producto, producto.Nombre_Producto  from pagos_provedor INNER JOIN proveedor ON Proveedor_Id_Provedor = proveedor.Id_Provedor INNER JOIN producto ON producto.Id_Producto = pagos_provedor.Id_producto where Fecha_Pago >'"+diferencia+"'";
          try {
             
             Statement s = conexion.createStatement();
@@ -586,7 +665,8 @@ label_imagen.setIcon(icono);
                 
                 table.addCell(rs.getString(3));
                 table.addCell(rs.getString(4));
-                
+                 table.addCell(rs.getString(5));
+                table.addCell(rs.getString(6));
                 
                                 
             }
@@ -614,7 +694,7 @@ label_imagen.setIcon(icono);
           PdfPCell celdaFinal = new PdfPCell(new Paragraph("Total: "+result+""));
              
             // Indicamos cuantas columnas ocupa la celda
-            celdaFinal.setColspan(4);
+            celdaFinal.setColspan(6);
             table.addCell(celdaFinal);
          document.add(table);
          
@@ -685,15 +765,17 @@ label_imagen.setIcon(icono);
     modelo.addColumn("Nombre_Proveedor");
     modelo.addColumn("Cantidad_Dinero");
     modelo.addColumn("Fecha_Pago");
+    modelo.addColumn("Cantidad_producto");
+    modelo.addColumn("Nombre_Producto");
      
-    
+     
     
     jTable1.setModel(modelo);
     
    
-     String sql1= "select proveedor.Nombre_Compañia, proveedor.Nombre_Proveedor, Cantidad_Dinero, Fecha_Pago from pagos_provedor INNER JOIN proveedor ON Proveedor_Id_Provedor = proveedor.Id_Provedor  where  Fecha_Pago >'"+diferencia+"'";
+       String sql1= "select proveedor.Nombre_Compañia, proveedor.Nombre_Proveedor, Cantidad_Dinero, Fecha_Pago, pagos_provedor.Cantidad_producto, producto.Nombre_Producto  from pagos_provedor INNER JOIN proveedor ON Proveedor_Id_Provedor = proveedor.Id_Provedor INNER JOIN producto ON producto.Id_Producto = pagos_provedor.Id_producto where Fecha_Pago >'"+diferencia+"'";
          
-       Object [] datos = new Object[4];
+       Object [] datos = new Object[6];
          
         
         try{ 
@@ -706,7 +788,8 @@ label_imagen.setIcon(icono);
                 datos[1]=rs.getString(2);
                 datos[2]=rs.getString(3);
                 datos[3]=rs.getString(4);
-               
+               datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
                 
 
                 
@@ -1002,6 +1085,7 @@ label_imagen.setIcon(icono);
    
    public void ventas_documento(){
           Double result=0.0;
+           int result1=0;
       String valor1 = (String) jComboBox1.getSelectedItem();
      String diferencia="";
         File miDir = new File (".");
@@ -1092,6 +1176,18 @@ label_imagen.setIcon(icono);
        result=rs.getDouble(1);   
        
             }
+            String sql31= "select sum( Cantidad) from ventas INNER JOIN producto ON Producto_Id_Producto = producto.Id_Producto where producto.categoria= '"+(String) jComboBox3.getSelectedItem()+"' AND ventas.Fecha_Venta >'"+diferencia+"'";
+            
+            
+            
+            
+            s = conexion.createStatement();
+          rs = s.executeQuery(sql31);
+            
+            while(rs.next()){
+       result1=rs.getInt(1);   
+       
+            }
           
     }   catch (SQLException ex) {
         Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
@@ -1105,6 +1201,12 @@ label_imagen.setIcon(icono);
             // Indicamos cuantas columnas ocupa la celda
             celdaFinal.setColspan(9);
             table.addCell(celdaFinal);
+           
+             PdfPCell celdaFinal1 = new PdfPCell(new Paragraph("Total de "+(String) jComboBox3.getSelectedItem()+": "+result1+""));
+             
+            // Indicamos cuantas columnas ocupa la celda
+            celdaFinal1.setColspan(9);
+            table.addCell(celdaFinal1);
          document.add(table);
          
             
@@ -1132,6 +1234,7 @@ label_imagen.setIcon(icono);
     String valor1 = (String) jComboBox1.getSelectedItem();
      String diferencia="";
       String sql ="";
+      int result1 =0;
         try {
              if ("Dia".equals(valor1) ){
              
@@ -1227,7 +1330,20 @@ label_imagen.setIcon(icono);
             while(rs.next()){
                  result=rs.getDouble(1);
             }
+             String sql31= "select sum( Cantidad) from ventas INNER JOIN producto ON Producto_Id_Producto = producto.Id_Producto where producto.categoria= '"+(String) jComboBox3.getSelectedItem()+"' AND ventas.Fecha_Venta >'"+diferencia+"'";
+            
+            
+            
+            
+            s = conexion.createStatement();
+          rs = s.executeQuery(sql31);
+            
+            while(rs.next()){
+       result1=rs.getInt(1);   
+       
+            }
             jLabel10.setText(String.valueOf("Total: "+result));
+             jLabel11.setText(String.valueOf("Total de "+(String) jComboBox3.getSelectedItem()+" :"+result1));
         } catch (SQLException ex) {
             Logger.getLogger(Facturas_Masivas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1268,12 +1384,16 @@ label_imagen.setIcon(icono);
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -1312,6 +1432,38 @@ label_imagen.setIcon(icono);
             }
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 130, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox2ItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, -1, -1));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 210, 150, 20));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Refresco", "Agua", "Proteina" }));
+        jComboBox3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox3ItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, -1, -1));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 140, 20));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1342,32 +1494,12 @@ label_imagen.setIcon(icono);
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, -1, -1));
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
+        jScrollPane2.setViewportView(jScrollPane1);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox2ItemStateChanged(evt);
-            }
-        });
-        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, -1));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 550, 320));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox1ItemStateChanged(evt);
-            }
-        });
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, -1, -1));
-
-        jLabel10.setText("jLabel1");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 210, -1, -1));
+        jLabel1.setText("jLabel1");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
@@ -1379,7 +1511,7 @@ label_imagen.setIcon(icono);
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 30));
 
         jLabel15.setForeground(new java.awt.Color(250, 234, 128));
         jLabel15.setText("Reportes");
@@ -1527,6 +1659,10 @@ String valor1 = (String) jComboBox2.getSelectedItem();
       historialcliente();
        }        // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
+ ventas();        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3ItemStateChanged
     
     /**
      * @param args the command line arguments
@@ -1574,12 +1710,16 @@ String valor1 = (String) jComboBox2.getSelectedItem();
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel label_imagen;
     // End of variables declaration//GEN-END:variables

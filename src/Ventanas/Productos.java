@@ -63,10 +63,10 @@ public class Productos extends javax.swing.JFrame {
         
         initComponents();
         this.setLocationRelativeTo(null);
-         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
-
+cargar();
 jComboBox2.removeAllItems();
           jComboBox2.addItem ("Nombre_Producto");
           jComboBox2.addItem ("Id_Producto");
@@ -80,7 +80,49 @@ jComboBox2.removeAllItems();
         actualizar();
     }
     
-    
+    void cargar() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_DEFAULT));
+                jLabel1.setText(null);
+                jLabel1.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+public static BufferedImage decodeToImage(String imageString) {
+
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+     
     public void id()
     {
     String sql= "select Nombre_Proveedor from proveedor";
@@ -110,6 +152,7 @@ jComboBox2.removeAllItems();
              System.out.print(columna+""+fila);
              
              if(columna==1){
+                 if (jTable1.getValueAt(fila, columna).toString().matches("^[a-zA-Z ]{1,45}?$")) {
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -122,10 +165,16 @@ if(resp==JOptionPane.YES_OPTION){
                  } catch (SQLException ex) {
                      Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
                  }
-            }
+            }}else{
+                     JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres");
+                                mostrar();
+                 }
+
              }
              
              if(columna==2){
+                 
+             if (jTable1.getValueAt(fila, columna).toString().matches("^[0-9]{1,3}?$")) {
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -133,14 +182,21 @@ if(resp==JOptionPane.YES_OPTION){
                      String sql1= " update producto set Cantidad_Producto= ? where Id_Producto="+jTable1.getValueAt(fila,0)+"";
                      
                      PreparedStatement pst = conexion.prepareStatement(sql1);
-                     pst.setString(1,(String) jTable1.getValueAt(fila,columna) );
+                     pst.setInt(1,(int) jTable1.getValueAt(fila,columna) );
                    pst.executeUpdate();
                  } catch (SQLException ex) {
                      Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
                  }
-            }
+            }}else{
+                 JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres numerico");
+                                mostrar();
              }
+             }          
+             
+             
+             
              if(columna==3){
+              if (jTable1.getValueAt(fila, columna).toString().matches("^[0-9.]{1,7}?$")) {
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -148,13 +204,16 @@ if(resp==JOptionPane.YES_OPTION){
                      String sql1= " update producto set Precio_Producto= ? where Id_Producto="+jTable1.getValueAt(fila,0)+"";
                      
                      PreparedStatement pst = conexion.prepareStatement(sql1);
-                     pst.setString(1,(String) jTable1.getValueAt(fila,columna) );
+                     pst.setDouble(1,(double) jTable1.getValueAt(fila,columna) );
                    pst.executeUpdate();
                  } catch (SQLException ex) {
                      Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
+             }else{
+                  JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres numerico");
+                                mostrar();
+              }}
              
              
              
@@ -316,8 +375,6 @@ if(valor){
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         jTextField7 = new javax.swing.JTextField();
@@ -328,6 +385,13 @@ if(valor){
         jTextField5 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -367,8 +431,8 @@ if(valor){
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, -1));
 
-        jLabel3.setText("Id_provedor");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, -1, -1));
+        jLabel3.setText("Categoria");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, -1, -1));
 
         jLabel4.setText("Cantidad_Producto");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, -1, -1));
@@ -378,8 +442,102 @@ if(valor){
                 jTextField3ActionPerformed(evt);
             }
         });
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 140, -1));
+
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 140, -1));
+
+        jButton3.setText("Eliminnar");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton3MouseEntered(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, -1, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 0, -1, -1));
+
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField7KeyReleased(evt);
+            }
+        });
+        jPanel2.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 70, -1));
+
+        jButton4.setText("Buscar");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton4MouseEntered(evt);
+            }
+        });
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
+
+        jButton5.setText("Quitar filtro");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, -1, -1));
+
+        jLabel5.setText("Precio_Producto");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, -1, -1));
+
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField5KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField5KeyTyped(evt);
+            }
+        });
+        jPanel2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 140, -1));
+
+        jLabel6.setText("Nombre_Producto");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, -1, -1));
+
+        jRadioButton1.setText("servicio");
+        jRadioButton1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jRadioButton1StateChanged(evt);
+            }
+        });
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, -1, -1));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Refresco", "Agua", "Proteina" }));
+        jPanel2.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, -1, -1));
+
+        jLabel7.setText("Id_provedor");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -410,62 +568,12 @@ if(valor){
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, -1, -1));
+        jScrollPane2.setViewportView(jScrollPane1);
 
-        jButton3.setText("Eliminnar");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton3MouseEntered(evt);
-            }
-        });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 160, -1, -1));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 540, 320));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 0, -1, -1));
-        jPanel2.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 70, -1));
-
-        jButton4.setText("Buscar");
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton4MouseEntered(evt);
-            }
-        });
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, -1, -1));
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
-
-        jButton5.setText("Quitar filtro");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, -1, -1));
-
-        jLabel5.setText("Precio_Producto");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, -1, -1));
-
-        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField5KeyTyped(evt);
-            }
-        });
-        jPanel2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 140, -1));
-
-        jLabel6.setText("Nombre_Producto");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, -1, -1));
+        jLabel1.setText("jLabel1");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
@@ -477,7 +585,7 @@ if(valor){
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 30));
 
         jLabel15.setForeground(new java.awt.Color(250, 234, 128));
         jLabel15.setText("Productos");
@@ -509,35 +617,28 @@ this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_label_imagenMouseEntered
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
- int id= 0;
-        String Nombre_Producto = jTextField3.getText();
-         String Cantidad_Producto = jTextField4.getText();
+ if(jRadioButton1.isSelected()){
+        int id= 0;
+        
+ 
+ String Nombre_Producto = jTextField3.getText();
+        
          String Precio_Producto = jTextField5.getText();
          
 
- String sql1= "select Id_provedor from proveedor where Nombre_Proveedor= '"+(String) jComboBox1.getSelectedItem()+"'";
-        try {
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sql1);
-            
-            while(rs.next()){
-              id=(  rs.getInt(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
 
         
  String sql = "";
-       sql = "INSERT INTO producto (Nombre_Producto, Cantidad_Producto, Precio_Producto, Id_provedor) VALUES (?, ?, ?, ?)";
+       sql = "INSERT INTO producto (Nombre_Producto, Cantidad_Producto, Precio_Producto,  Habilitado) VALUES (?, 0.0, ?,'s')";
         try {
 
             PreparedStatement pst = conexion.prepareStatement(sql);
         ;
             pst.setString(1, Nombre_Producto);
-            pst.setString(2, Cantidad_Producto);
-            pst.setString(3, Precio_Producto);
-            pst.setInt(4, id);
+         
+            pst.setString(2, Precio_Producto);
+          
            
             
             int n = pst.executeUpdate();
@@ -560,7 +661,62 @@ this.setVisible(false);        // TODO add your handling code here:
          jTextField4.setText("");
          jTextField3.setText("");
          jTextField5.setText("");
+
+}else{
+        int id= 0;
+ 
+ String Nombre_Producto = jTextField3.getText();
+         String Cantidad_Producto = jTextField4.getText();
+         String Precio_Producto = jTextField5.getText();
          
+
+ String sql1= "select Id_provedor from proveedor where Nombre_Proveedor= '"+(String) jComboBox1.getSelectedItem()+"'";
+        try {
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql1);
+            
+            while(rs.next()){
+              id=(  rs.getInt(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+ String sql = "";
+       sql = "INSERT INTO producto (Nombre_Producto, Cantidad_Producto, Precio_Producto, Id_provedor, categoria) VALUES (?, ?, ?, ?, ?)";
+        try {
+
+            PreparedStatement pst = conexion.prepareStatement(sql);
+        ;
+            pst.setString(1, Nombre_Producto);
+            pst.setString(2, Cantidad_Producto);
+            pst.setString(3, Precio_Producto);
+            pst.setInt(4, id);
+             pst.setString(5, (String) jComboBox3.getSelectedItem());
+           
+            
+            int n = pst.executeUpdate();
+            if (n > 0) {
+                JOptionPane.showMessageDialog(null, "Registro guardado");
+               
+               
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al insertar el registro.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException | HeadlessException e) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, e);
+        }
+         
+ mostrar();
+         
+ actualizar();
+         
+         jTextField3.setText("");
+         jTextField4.setText("");
+         jTextField3.setText("");
+         jTextField5.setText("");
+ }    
          
         
 // TODO add your handling code here:
@@ -761,6 +917,43 @@ desactivar();
 char c = evt.getKeyChar();
 if((c<'0'||c>'9')&&c>'.')evt.consume();        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5KeyTyped
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        if (!jTextField3.getText().matches("^[a-zA-Z ]{1,45}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres de la a-z");
+            jTextField3.setText("");
+        }
+    }//GEN-LAST:event_jTextField3KeyReleased
+
+    private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
+        if (!jTextField4.getText().matches("^[0-9]{1,3}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField4.setText("");
+        }
+    }//GEN-LAST:event_jTextField4KeyReleased
+
+    private void jTextField5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyReleased
+        if (!jTextField5.getText().matches("^[0-9.]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField5.setText("");
+        }
+    }//GEN-LAST:event_jTextField5KeyReleased
+
+    private void jTextField7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyReleased
+        if (jTextField7.getText().matches("^[a-zA-Z ]{1,45}?$") || jTextField7.getText().matches("^[0-9]{1,4}?$")) {
+        } else {
+            JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres A-Z o numero");
+            jTextField7.setText("");
+        }
+    }//GEN-LAST:event_jTextField7KeyReleased
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jRadioButton1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButton1StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1StateChanged
     
     /**
      * @param args the command line arguments
@@ -811,15 +1004,20 @@ if((c<'0'||c>'9')&&c>'.')evt.consume();        // TODO add your handling code he
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;

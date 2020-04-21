@@ -7,6 +7,8 @@ package Ventanas;
 
 import static Ventanas.subir_imagen.decodeToImage;
 import clases.LeerHuella;
+import clases.LeerHuella1_verificar;
+import clases.LeerHuella_Administradores_verificar;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
@@ -45,301 +47,102 @@ public class Menu_11 extends javax.swing.JFrame {
 
     /**
      * Creates new form Menu_1
-     */ conectar cc = new conectar();
+     */
+    conectar cc = new conectar();
     Connection conexion = cc.conexion();
-     ImageIcon icon = null;
-    
-   
+    ImageIcon icon = null;
+
     int ID;
-    
+
     public Menu_11() {
-        
-        
-        
+
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
-Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
-label_imagen.setIcon(icono);
-this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/archivo.png"));
-icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel7.getWidth(), jLabel7.getHeight(), Image.SCALE_DEFAULT));
-jLabel7.setIcon(icono);
+        Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
+        label_imagen.setIcon(icono);
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/software-properties.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel7.getWidth(), jLabel7.getHeight(), Image.SCALE_DEFAULT));
+        jLabel7.setIcon(icono);
 
-this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/avatar.png"));
-icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel4.getWidth(), jLabel4.getHeight(), Image.SCALE_DEFAULT));
-jLabel4.setIcon(icono);
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/avatar.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel4.getWidth(), jLabel4.getHeight(), Image.SCALE_DEFAULT));
+        jLabel4.setIcon(icono);
 
-this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/multiple-users-silhouette.png"));
-icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel5.getWidth(), jLabel5.getHeight(), Image.SCALE_DEFAULT));
-jLabel5.setIcon(icono);
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/multiple-users-silhouette.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel5.getWidth(), jLabel5.getHeight(), Image.SCALE_DEFAULT));
+        jLabel5.setIcon(icono);
 
-this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/vision.png"));
-icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel6.getWidth(), jLabel6.getHeight(), Image.SCALE_DEFAULT));
-jLabel6.setIcon(icono);
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/info.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel6.getWidth(), jLabel6.getHeight(), Image.SCALE_DEFAULT));
+        jLabel6.setIcon(icono);
 
-this.repaint();
+        this.repaint();
 
-fot = new ImageIcon(getClass().getResource("/imagenes1/trabajador-de-la-construccion.png"));
-icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel8.getWidth(), jLabel8.getHeight(), Image.SCALE_DEFAULT));
-jLabel8.setIcon(icono);
+        fot = new ImageIcon(getClass().getResource("/imagenes1/trabajador-de-la-construccion.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel8.getWidth(), jLabel8.getHeight(), Image.SCALE_DEFAULT));
+        jLabel8.setIcon(icono);
 
-this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/carro-de-reparto-silueta.png"));
-icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel5.getWidth(), jLabel5.getHeight(), Image.SCALE_DEFAULT));
-jLabel5.setIcon(icono);
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/carro-de-reparto-silueta.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel5.getWidth(), jLabel5.getHeight(), Image.SCALE_DEFAULT));
+        jLabel5.setIcon(icono);
 
-this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/botella-de-plastico.png"));
-icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel9.getWidth(), jLabel9.getHeight(), Image.SCALE_DEFAULT));
-jLabel9.setIcon(icono);
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/botella-de-plastico.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel9.getWidth(), jLabel9.getHeight(), Image.SCALE_DEFAULT));
+        jLabel9.setIcon(icono);
 
-this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/gimnasio.png"));
-icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel10.getWidth(), jLabel10.getHeight(), Image.SCALE_DEFAULT));
-jLabel10.setIcon(icono);
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/gimnasio.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel10.getWidth(), jLabel10.getHeight(), Image.SCALE_DEFAULT));
+        jLabel10.setIcon(icono);
 
-this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/tarjeta-de-credito-y-billete.png"));
-icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel11.getWidth(), jLabel11.getHeight(), Image.SCALE_DEFAULT));
-jLabel11.setIcon(icono);
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/tarjeta-de-credito-y-billete.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel11.getWidth(), jLabel11.getHeight(), Image.SCALE_DEFAULT));
+        jLabel11.setIcon(icono);
 
-this.repaint();
-fot = new ImageIcon(getClass().getResource("/imagenes1/analitica.png"));
-icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel12.getWidth(), jLabel12.getHeight(), Image.SCALE_DEFAULT));
-jLabel12.setIcon(icono);
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/analitica.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel12.getWidth(), jLabel12.getHeight(), Image.SCALE_DEFAULT));
+        jLabel12.setIcon(icono);
+        
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/pesa.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jlbmaquina.getWidth(), jlbmaquina.getHeight(), Image.SCALE_DEFAULT));
+        jlbmaquina.setIcon(icono);
+        
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/tomboy.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jlbmaquina1.getWidth(), jlbmaquina1.getHeight(), Image.SCALE_DEFAULT));
+        jlbmaquina1.setIcon(icono);
+        
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/comprar.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jlbmaquina2.getWidth(), jlbmaquina2.getHeight(), Image.SCALE_DEFAULT));
+        jlbmaquina2.setIcon(icono);
 
-this.repaint();
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/multimedia-photo-manager.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel14.getWidth(), jLabel14.getHeight(), Image.SCALE_DEFAULT));
+        jLabel14.setIcon(icono);
+
+        this.repaint();
+        cargarf();
         cargar();
         fecha();
     }
     
-    public void fecha() {
-        Double result=0.0;
-        String diferencia="";
-        File miDir = new File (".");
-      Paragraph parrafo = null;
-      String sql ="";
-    String fecha_Actual="";
-     String fecha="";
-     int numero=0;
-    
-      String sq = "SELECT fecha FROM fecha ";
-    try {
-
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sq);
-            while (rs.next()) {
-               fecha_Actual=rs.getString(1);
-               
-            }
-            
-               
-                
-
-        } catch (SQLException ex) {
-            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-     String sql1 = "SELECT CURDATE()";
-    try {
-
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sql1);
-            while (rs.next()) {
-               fecha=rs.getString(1);
-               
-            }
-            
-               
-                
-
-        } catch (SQLException ex) {
-            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    if(!fecha.equals(fecha_Actual)){
-        
-        
-     String sql2 = "SELECT DAY(CURDATE())";
-    try {
-
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sql2);
-            while (rs.next()) {
-               numero=rs.getInt(1);
-               
-            }
-            
-               
-                
-
-        } catch (SQLException ex) {
-            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    
-    if(numero==30){
-          try {
-    sql = "SELECT DATE_SUB(CURDATE(), INTERVAL 31 DAY)";
-             
-             
-             
-             
-             
-             Statement s = conexion.createStatement();
-             ResultSet rs = s.executeQuery(sql);
-             while (rs.next()) {
-                diferencia  = rs.getString(1);
-                 
-             }
-             
-             System.out.print(diferencia);
-             
-         } catch (SQLException ex) {
-             Logger.getLogger(Membresia.class.getName()).log(Level.SEVERE, null, ex);
-         }
-          com.itextpdf.text.Document document = new com.itextpdf.text.Document();
-         
-        try{
-            PdfWriter.getInstance(document, new FileOutputStream( miDir.getCanonicalPath()+"\\ventas_"+diferencia+".pdf"));
-            document.open();
-             
-      parrafo = new Paragraph("Ramirez Boxing club");       // Este codigo genera una tabla de 3 columnas
-          
-    // Este codigo genera una tabla de 3 columnas
-    PdfPTable table = new PdfPTable(6);
-    table.addCell("Nombre");
-    table.addCell("Apellidos");
-    table.addCell("Id_Producto");
-    table.addCell("Nombre_Producto");
-    table.addCell("Cantidad");
-    table.addCell("Precio_Producto");
-   
-    // addCell() agrega una celda a la tabla, el cambio de fila
-    // ocurre automaticamente al llenar la fila
-      String sql11= "select empleado.Nombre, empleado.Apellidos, Producto_Id_Producto, producto.Nombre_Producto, sum(Cantidad) as cantidad,producto.Precio_Producto from ventas INNER JOIN producto ON Producto_Id_Producto = producto.Id_Producto INNER JOIN empleado ON Empleado_Id_Empleado = empleado.Id_Usuario where  ventas.Fecha_Venta >'"+diferencia+"' group by empleado.Nombre, empleado.Apellidos, Producto_Id_Producto, producto.Nombre_Producto ";
-         try {
-            
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sql11);
-            while(rs.next()){
-               
-                table.addCell(rs.getString(1));
-                
-                table.addCell(rs.getString(2));
-                
-                table.addCell(rs.getString(3));
-                table.addCell(rs.getString(4));
-                table.addCell(rs.getString(5));
-                table.addCell(rs.getString(6));
-                
-                                
-            }
-            
-            String sql3= "select sum( Cantidad*producto.Precio_Producto) from ventas INNER JOIN producto ON Producto_Id_Producto = producto.Id_Producto where  ventas.Fecha_Venta >'"+diferencia+"'";
-            
-            
-            
-            
-            s = conexion.createStatement();
-          rs = s.executeQuery(sql3);
-            
-            while(rs.next()){
-       result=rs.getDouble(1);   
-       
-            }
-          
-    }   catch (SQLException ex) {
-        Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
-        
-        
-    }
-          document.add(parrafo);
-          document.add( Chunk.NEWLINE );
-          PdfPCell celdaFinal = new PdfPCell(new Paragraph("Total: "+result+""));
-             
-            // Indicamos cuantas columnas ocupa la celda
-            celdaFinal.setColspan(9);
-            table.addCell(celdaFinal);
-         document.add(table);
-         
-            
-        
-            
-               
-            document.close(); 
-        
-        }catch(DocumentException e)
-        {
-           JOptionPane.showMessageDialog(null, "Ocurrio un error al crear el archivo","Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(-1);
-        } catch (IOException ex) {
-             Logger.getLogger(Menu_11.class.getName()).log(Level.SEVERE, null, ex);
-         }
-        try {
-            Desktop.getDesktop().open(new File(miDir.getCanonicalPath()+"\\ventas_"+diferencia+".pdf"));
-        } catch (IOException ex) {
-            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        try {
-                     String s= " update fecha set fecha = CURDATE() ";
-                     
-                     PreparedStatement pst = conexion.prepareStatement(s);
-                   
-                   pst.executeUpdate();
-                 } catch (SQLException ex) {
-                     Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-        
-        
-        
-    }
-    
-    
-    }
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-     void cargar1() {
+    void cargarf() {
+    ImageIcon icon = null;
         BufferedImage img = null;
-        String sql = "SELECT imagen FROM administradores where id ="+ID+"";
-        String imagen_string = null;
-
-        try {
-
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sql);
-            while (rs.next()) {
-                imagen_string = rs.getString("imagen");
-               
-            }
-            
-                img = decodeToImage(imagen_string);
-                ImageIcon icon = new ImageIcon(img);
-                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel3.getWidth(), jLabel3.getHeight(), Image.SCALE_DEFAULT));
-                jLabel3.setText(null);
-                jLabel3.setIcon(icono);
-            
-
-        } catch (SQLException ex) {
-            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-     void cargar() {
-        BufferedImage img = null;
-        String sql = "SELECT * FROM logo ";
+        String sql = "SELECT * FROM fondo ";
         String imagen_string = null;
 
         try {
@@ -353,9 +156,9 @@ this.repaint();
             
                 img = decodeToImage(imagen_string);
                  icon = new ImageIcon(img);
-                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_DEFAULT));
-                jLabel1.setText(null);
-                jLabel1.setIcon(icono);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel13.getWidth(), jLabel13.getHeight(), Image.SCALE_DEFAULT));
+                jLabel13.setText(null);
+                jLabel13.setIcon(icono);
             
 
         } catch (SQLException ex) {
@@ -363,7 +166,219 @@ this.repaint();
         }
 
     }
-     public static BufferedImage decodeToImage(String imageString) {
+
+
+    public void fecha() {
+        Double result = 0.0;
+        String diferencia = "";
+        File miDir = new File(".");
+        Paragraph parrafo = null;
+        String sql = "";
+        String fecha_Actual = "";
+        String fecha = "";
+        int numero = 0;
+
+        String sq = "SELECT fecha FROM fecha ";
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sq);
+            while (rs.next()) {
+                fecha_Actual = rs.getString(1);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql1 = "SELECT CURDATE()";
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql1);
+            while (rs.next()) {
+                fecha = rs.getString(1);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (!fecha.equals(fecha_Actual)) {
+
+            String sql2 = "SELECT DAY(CURDATE())";
+            try {
+
+                Statement s = conexion.createStatement();
+                ResultSet rs = s.executeQuery(sql2);
+                while (rs.next()) {
+                    numero = rs.getInt(1);
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (numero == 30) {
+                try {
+                    sql = "SELECT DATE_SUB(CURDATE(), INTERVAL 31 DAY)";
+
+                    Statement s = conexion.createStatement();
+                    ResultSet rs = s.executeQuery(sql);
+                    while (rs.next()) {
+                        diferencia = rs.getString(1);
+
+                    }
+
+                    System.out.print(diferencia);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(Membresia.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+
+                try {
+                    PdfWriter.getInstance(document, new FileOutputStream(miDir.getCanonicalPath() + "\\ventas_" + diferencia + ".pdf"));
+                    document.open();
+
+                    parrafo = new Paragraph("Ramirez Boxing club");       // Este codigo genera una tabla de 3 columnas
+
+                    // Este codigo genera una tabla de 3 columnas
+                    PdfPTable table = new PdfPTable(6);
+                    table.addCell("Nombre");
+                    table.addCell("Apellidos");
+                    table.addCell("Id_Producto");
+                    table.addCell("Nombre_Producto");
+                    table.addCell("Cantidad");
+                    table.addCell("Precio_Producto");
+
+                    // addCell() agrega una celda a la tabla, el cambio de fila
+                    // ocurre automaticamente al llenar la fila
+                    String sql11 = "select empleado.Nombre, empleado.Apellidos, Producto_Id_Producto, producto.Nombre_Producto, sum(Cantidad) as cantidad,producto.Precio_Producto from ventas INNER JOIN producto ON Producto_Id_Producto = producto.Id_Producto INNER JOIN empleado ON Empleado_Id_Empleado = empleado.Id_Usuario where  ventas.Fecha_Venta >'" + diferencia + "' group by empleado.Nombre, empleado.Apellidos, Producto_Id_Producto, producto.Nombre_Producto ";
+                    try {
+
+                        Statement s = conexion.createStatement();
+                        ResultSet rs = s.executeQuery(sql11);
+                        while (rs.next()) {
+
+                            table.addCell(rs.getString(1));
+
+                            table.addCell(rs.getString(2));
+
+                            table.addCell(rs.getString(3));
+                            table.addCell(rs.getString(4));
+                            table.addCell(rs.getString(5));
+                            table.addCell(rs.getString(6));
+
+                        }
+
+                        String sql3 = "select sum( Cantidad*producto.Precio_Producto) from ventas INNER JOIN producto ON Producto_Id_Producto = producto.Id_Producto where  ventas.Fecha_Venta >'" + diferencia + "'";
+
+                        s = conexion.createStatement();
+                        rs = s.executeQuery(sql3);
+
+                        while (rs.next()) {
+                            result = rs.getDouble(1);
+
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+
+                    }
+                    document.add(parrafo);
+                    document.add(Chunk.NEWLINE);
+                    PdfPCell celdaFinal = new PdfPCell(new Paragraph("Total: " + result + ""));
+
+                    // Indicamos cuantas columnas ocupa la celda
+                    celdaFinal.setColspan(9);
+                    table.addCell(celdaFinal);
+                    document.add(table);
+
+                    document.close();
+
+                } catch (DocumentException e) {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un error al crear el archivo", "Error", JOptionPane.ERROR_MESSAGE);
+                    System.exit(-1);
+                } catch (IOException ex) {
+                    Logger.getLogger(Menu_11.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    Desktop.getDesktop().open(new File(miDir.getCanonicalPath() + "\\ventas_" + diferencia + ".pdf"));
+                } catch (IOException ex) {
+                    Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                try {
+                    String s = " update fecha set fecha = CURDATE() ";
+
+                    PreparedStatement pst = conexion.prepareStatement(s);
+
+                    pst.executeUpdate();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        }
+
+    }
+
+    void cargar1() {
+        BufferedImage img = null;
+        String sql = "SELECT imagen FROM administradores where id =" + ID + "";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("imagen");
+
+            }
+
+            img = decodeToImage(imagen_string);
+            ImageIcon icon = new ImageIcon(img);
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel3.getWidth(), jLabel3.getHeight(), Image.SCALE_DEFAULT));
+            jLabel3.setText(null);
+            jLabel3.setIcon(icono);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    void cargar() {
+        BufferedImage img = null;
+        String sql = "SELECT * FROM logo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+
+            }
+
+            img = decodeToImage(imagen_string);
+            icon = new ImageIcon(img);
+            Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_DEFAULT));
+            jLabel1.setText(null);
+            jLabel1.setIcon(icono);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static BufferedImage decodeToImage(String imageString) {
 
         BufferedImage image = null;
         byte[] imageByte;
@@ -402,6 +417,11 @@ this.repaint();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jlbmaquina = new javax.swing.JLabel();
+        jlbmaquina1 = new javax.swing.JLabel();
+        jlbmaquina2 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -459,14 +479,14 @@ this.repaint();
                 jLabel6MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 130, 110));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, 100, 100));
 
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel7MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 140, 40, 30));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 140, 50, 40));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/carrito-de-tienda.png"))); // NOI18N
@@ -509,14 +529,48 @@ this.repaint();
                 jLabel12MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 130, 110));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 130, 110));
 
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 220, 160));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 220, 160));
+
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 100, 100));
+
+        jlbmaquina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/cliente.png"))); // NOI18N
+        jlbmaquina.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbmaquinaMouseClicked(evt);
+            }
+        });
+        jPanel2.add(jlbmaquina, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 130, 110));
+
+        jlbmaquina1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/cliente.png"))); // NOI18N
+        jlbmaquina1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbmaquina1MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jlbmaquina1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, 130, 110));
+
+        jlbmaquina2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/cliente.png"))); // NOI18N
+        jlbmaquina2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbmaquina2MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jlbmaquina2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 430, 130, 110));
+
+        jLabel13.setText("jLabel13");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
@@ -553,9 +607,9 @@ this.repaint();
     }// </editor-fold>//GEN-END:initComponents
 
     private void label_imagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_imagenMouseClicked
- int dialog=JOptionPane.YES_NO_OPTION;
-        int result=JOptionPane.showConfirmDialog(null, "¿Desea Salir?","Exit",dialog);
-        if (result==0) {
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea Salir?", "Exit", dialog);
+        if (result == 0) {
             System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_label_imagenMouseClicked
     }
@@ -564,10 +618,10 @@ this.repaint();
     }//GEN-LAST:event_label_imagenMouseEntered
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-   
+
         this.ID = Integer.valueOf(jLabel2.getText());
         System.out.print(ID);
-cargar1();// TODO add your handling code here:
+        cargar1();// TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowIconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowIconified
@@ -576,27 +630,26 @@ cargar1();// TODO add your handling code here:
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
 
- 
-      String sql = "SELECT archivo, nomre FROM pdf where id = 1";
-        
- byte[] b = null;
- String nombre = "";
+        String sql = "SELECT archivo, nomre FROM pdf where id = 1";
+
+        byte[] b = null;
+        String nombre = "";
         try {
 
             Statement s = conexion.createStatement();
             ResultSet rs = s.executeQuery(sql);
             while (rs.next()) {
-                 b = rs.getBytes(1);
-                 nombre= rs.getString(2);
+                b = rs.getBytes(1);
+                nombre = rs.getString(2);
             }
-         
+
             InputStream bos = new ByteArrayInputStream(b);
 
             int tamanoInput = bos.available();
             byte[] datosPDF = new byte[tamanoInput];
             bos.read(datosPDF, 0, tamanoInput);
 
-            OutputStream out = new FileOutputStream(nombre+".pdf");
+            OutputStream out = new FileOutputStream(nombre + ".pdf");
             out.write(datosPDF);
 
             //abrir archivo
@@ -604,88 +657,86 @@ cargar1();// TODO add your handling code here:
             bos.close();
             s.close();
             rs.close();
-            
 
         } catch (IOException | NumberFormatException | SQLException ex) {
             System.out.println("Error al abrir archivo PDF " + ex.getMessage());
         }
-         try {
-             Desktop.getDesktop().open(new File(nombre+".pdf"));
-             // TODO add your handling code here:
-         } catch (IOException ex) {
-             Logger.getLogger(Menu_11.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            Desktop.getDesktop().open(new File(nombre + ".pdf"));
+            // TODO add your handling code here:
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_11.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // TODO add your handling code here:
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
- Administradores obj=new  Administradores() ;
- 
-                      obj.jLabel2.setText(Integer.toString(ID));
- 
-        obj.setVisible(true); 
-        this.setVisible(false);
+          LeerHuella_Administradores_verificar lh = new LeerHuella_Administradores_verificar(null, true,ID);
+        lh.setBUSCAR(true);
+        lh.setVisible(true);
+        this.setVisible(false);   
+        lh.stop(); 
+      
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
-        Provedor obj=new  Provedor() ;
-                      obj.jLabel2.setText(Integer.toString(ID));
- 
+        Provedor obj = new Provedor();
+        obj.jLabel2.setText(Integer.toString(ID));
+
         obj.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-subir_imagen_empleados obj=new  subir_imagen_empleados() ;
-                      obj.jLabel3.setText(Integer.toString(ID));
- 
-        obj.setVisible(true); 
+        subir_imagen_Administrador obj = new subir_imagen_Administrador();
+        obj.jLabel3.setText(Integer.toString(ID));
+
+        obj.setVisible(true);
         this.setVisible(false);
-                // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
 
-subir_pdf obj=new  subir_pdf();
-        obj.setVisible(true);    
+        subir_pdf obj = new subir_pdf();
+        obj.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
 
-Empleados obj=new  Empleados() ;
- 
-                      obj.jLabel2.setText(Integer.toString(ID));
- 
-        obj.setVisible(true); 
-        this.setVisible(false);        // TODO add your handling code here:
+        LeerHuella1_verificar lh = new LeerHuella1_verificar(null, true,ID);
+        lh.setBUSCAR(true);
+        lh.setVisible(true);
+        this.setVisible(false);   
+        lh.stop(); 
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-Productos obj=new  Productos() ;
-                      obj.jLabel2.setText(Integer.toString(ID));
- 
+        Productos obj = new Productos();
+        obj.jLabel2.setText(Integer.toString(ID));
+
         obj.setVisible(true);
         this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
 
-        ejercicio obj=new  ejercicio() ;
-                      obj.jLabel2.setText(Integer.toString(ID));
- 
+        ejercicio obj = new ejercicio();
+        obj.jLabel2.setText(Integer.toString(ID));
+
         obj.setVisible(true);
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-  menu1_Pagos obj=new  menu1_Pagos() ;
-                      obj.jLabel3.setText(Integer.toString(ID));
- 
+        menu1_Pagos obj = new menu1_Pagos();
+        obj.jLabel3.setText(Integer.toString(ID));
+
         obj.setVisible(true);
         this.setVisible(false);
         // TODO add your handling code here:
@@ -693,9 +744,9 @@ Productos obj=new  Productos() ;
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
 
-        Reportes obj=new  Reportes() ;
-                      obj.jLabel2.setText(Integer.toString(ID));
- 
+        Reportes obj = new Reportes();
+        obj.jLabel2.setText(Integer.toString(ID));
+
         obj.setVisible(true);
         this.setVisible(false);        // TODO add your handling code here:
 
@@ -704,13 +755,41 @@ Productos obj=new  Productos() ;
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
 
-        subir_imagen obj=new  subir_imagen();
+        subir_imagen obj = new subir_imagen();
         obj.jLabel3.setText(Integer.toString(ID));
         obj.setVisible(true);
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel1MouseClicked
-    
+
+    private void jlbmaquinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbmaquinaMouseClicked
+        maquinaria obj = new maquinaria();
+        obj.jLabel2.setText(Integer.toString(ID));
+        obj.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jlbmaquinaMouseClicked
+
+    private void jlbmaquina1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbmaquina1MouseClicked
+        tareas obj = new tareas();
+        obj.jLabel2.setText(Integer.toString(ID));
+        obj.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jlbmaquina1MouseClicked
+
+    private void jlbmaquina2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbmaquina2MouseClicked
+        Caja obj = new Caja();
+        obj.jLabel2.setText(Integer.toString(ID));
+        obj.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jlbmaquina2MouseClicked
+
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+subir_fondo obj = new subir_fondo();
+        obj.jLabel3.setText(Integer.toString(ID));
+        obj.setVisible(true);
+        this.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel14MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -752,6 +831,8 @@ Productos obj=new  Productos() ;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel16;
     public javax.swing.JLabel jLabel2;
@@ -764,6 +845,9 @@ Productos obj=new  Productos() ;
     private javax.swing.JLabel jLabel9;
     public javax.swing.JPanel jPanel1;
     public static javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jlbmaquina;
+    private javax.swing.JLabel jlbmaquina1;
+    private javax.swing.JLabel jlbmaquina2;
     private javax.swing.JLabel label_imagen;
     // End of variables declaration//GEN-END:variables
 }

@@ -59,9 +59,7 @@ label_imagen.setIcon(icono);
 
 this.repaint();
 jLabel13.setText(formatoHora.format(fechaActual)+" "+formatoFecha.format(fechaActual));
-        cargar();
-        mostrar();
-        limpiar();
+       
     }
     public void limpiar(){
       
@@ -105,7 +103,7 @@ jLabel13.setText(formatoHora.format(fechaActual)+" "+formatoFecha.format(fechaAc
     
     double result=0.0;
         try {
-            String sql= "select sum( Cantidad*producto.Precio_Producto) from ventas INNER JOIN producto ON Producto_Id_Producto = producto.Id_Producto where  ventas.Habilitado = 'v'" ;
+            String sql= "select sum( Cantidad*producto.Precio_Producto) from ventas INNER JOIN producto ON Producto_Id_Producto = producto.Id_Producto where  ventas.Habilitado = 'v' AND ventas.Empleado_Id_Empleado="+ID ;
             
             
             
@@ -146,8 +144,10 @@ jLabel13.setText(formatoHora.format(fechaActual)+" "+formatoFecha.format(fechaAc
              }
          });
          modelo=(DefaultTableModel) jTable1.getModel();
-         String sql= "select Producto_Id_Producto, producto.Nombre_Producto, Cantidad,producto.Precio_Producto from ventas INNER JOIN producto ON Producto_Id_Producto = producto.Id_Producto where  ventas.Habilitado = 'v'" ;
-        Object [] datos = new Object[4];
+     
+         String sql= "select Producto_Id_Producto, producto.Nombre_Producto, Cantidad,producto.Precio_Producto from ventas INNER JOIN producto ON Producto_Id_Producto = producto.Id_Producto where  ventas.Habilitado = 'v' AND ventas.Empleado_Id_Empleado="+ID;
+       System.out.print(sql);
+         Object [] datos = new Object[4];
          
         
          
@@ -224,6 +224,11 @@ jLabel13.setText(formatoHora.format(fechaActual)+" "+formatoFecha.format(fechaAc
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
 
@@ -378,11 +383,8 @@ jLabel13.setText(formatoHora.format(fechaActual)+" "+formatoFecha.format(fechaAc
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
 
-this.ID = Integer.valueOf(jLabel2.getText());
-        System.out.print(ID);    
 
-
-        System.out.print(ID);            // TODO add your handling code here:
+                 // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
 
     private void label_imagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_imagenMouseClicked
@@ -394,6 +396,13 @@ this.ID = Integer.valueOf(jLabel2.getText());
     private void label_imagenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_imagenMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_label_imagenMouseEntered
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+this.ID = Integer.valueOf(jLabel2.getText());        // TODO add your handling code here:
+ cargar();
+        mostrar();
+        limpiar();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

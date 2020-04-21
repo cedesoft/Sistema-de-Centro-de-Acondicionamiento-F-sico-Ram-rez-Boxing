@@ -62,10 +62,10 @@ public class Pagos_Cliente extends javax.swing.JFrame {
         
         initComponents();
         this.setLocationRelativeTo(null);
-        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
-
+cargarf();
 id();
 
          
@@ -75,13 +75,13 @@ id();
                  null,
                  new String [] {
                      //Defines TODOS los nombres de las columnas que tendrá la tabla
-                     "Id_Producto","Nombre_Producto", "Cantidad_Producto", "Precio_Producto", "Eliminar"
+                      "Nombre","Apellido","Cantidad", "Fecha_Pago"
                  }
          ) {
              Class[] types = new Class [] {
                  //Defines el tipo que admitirá la COLUMNA, cada uno con el índice correspondiente
                  //Codigo (Integer), Cantidad (Integer), Nombre (String), Precio(Double)
-                 java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class,java.lang.Boolean.class
+                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class,java.lang.Boolean.class
              };
              
              //Función que asignará el tipo de campo que asignaste previamente
@@ -91,7 +91,33 @@ id();
          });modelo=(DefaultTableModel) jTable1.getModel();
         
     }
-    
+    void cargarf() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel4.getWidth(), jLabel4.getHeight(), Image.SCALE_DEFAULT));
+                jLabel4.setText(null);
+                jLabel4.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
      public void eliminar(){
         DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
         int a = jTable1.getRowCount()-1;
@@ -128,13 +154,13 @@ id();
                  null,
                  new String [] {
                      //Defines TODOS los nombres de las columnas que tendrá la tabla
-                     "Id_Usuario","Cantidad_Dinero","Fecha_Pago"
+                     "Nombre","Apellido","Cantidad", "Fecha_Pago"
                  }
          ) {
              Class[] types = new Class [] {
                  //Defines el tipo que admitirá la COLUMNA, cada uno con el índice correspondiente
                  //Codigo (Integer), Cantidad (Integer), Nombre (String), Precio(Double)
-                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
              };
              
              //Función que asignará el tipo de campo que asignaste previamente
@@ -143,25 +169,28 @@ id();
              }
          });
          modelo=(DefaultTableModel) jTable1.getModel();
-         String sql= "select Usuario_Id_Usuario, Cantidad_Dinero, Fecha_Pago from pagos_empleado where Usuario_Id_Usuario ="+ID_Cliente+"";
-        Object [] datos = new Object[3];
          
-        
+         String sql1= "select empleado.Nombre, empleado.Apellidos, Cantidad_Dinero, Fecha_Pago from pagos_empleado INNER JOIN empleado ON Usuario_Id_Usuario = empleado.Id_Usuario WHERE empleado.Id_Usuario ="+ID_Cliente+" ";
          
+       Object [] datos = new Object[4];
+         
+ 
          Statement s = conexion.createStatement();
-         ResultSet rs = s.executeQuery(sql);
+         ResultSet rs = s.executeQuery(sql1);
          
-         while(rs.next()){
-             datos[0]=rs.getString(1);
-             datos[1]=rs.getString(2);
-         
-              datos[2]=rs.getString(3);
-             
-             
-             
-             
-             modelo.addRow(datos);
-         }
+       
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+               
+                
+
+                
+                modelo.addRow(datos);
+            }
+
          
          
          jTable1.setModel(modelo);
@@ -316,13 +345,15 @@ id();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -345,27 +376,15 @@ id();
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, -1, -1));
-
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField1KeyTyped(evt);
             }
@@ -398,6 +417,26 @@ id();
         });
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 130));
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jScrollPane2.setViewportView(jScrollPane1);
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 580, 390));
+
+        jLabel4.setText("jLabel4");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
         label_imagen.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -408,7 +447,7 @@ id();
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 30));
 
         jLabel15.setForeground(new java.awt.Color(250, 234, 128));
         jLabel15.setText("Pagos");
@@ -453,7 +492,7 @@ cargar1();
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
-
+desactivar();
 
             // TODO add your handling code here:
     }//GEN-LAST:event_jButton3MouseEntered
@@ -512,6 +551,13 @@ if((c<'0'||c>'9')&&c>'.')evt.consume();      // TODO add your handling code here
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+       if (!jTextField1.getText().matches("^[0-9.]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField1.setText("");
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
     
     /**
      * @param args the command line arguments
@@ -585,10 +631,12 @@ if((c<'0'||c>'9')&&c>'.')evt.consume();      // TODO add your handling code here
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     public javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel label_imagen;

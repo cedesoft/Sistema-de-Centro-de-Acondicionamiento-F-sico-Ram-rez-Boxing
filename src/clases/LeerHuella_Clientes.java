@@ -47,6 +47,7 @@ public class LeerHuella_Clientes extends CapturarHuella{
     private DPFPFeatureSet caracteristicas = null;
      private boolean BUSCAR = false;
      public int ID=0;
+     boolean verificar_fecha = false;
       menu1 menu = new menu1();
       public int id2=0;
     public LeerHuella_Clientes(java.awt.Dialog parent, boolean modal) {
@@ -105,6 +106,33 @@ public class LeerHuella_Clientes extends CapturarHuella{
                                 
                                  encontrado = false;
                                 setBUSCAR(false);
+                       String sqlr = "select Cliente_Id_Cliente FROM historialcliente WHERE Fecha = CURDATE()";
+                    conectar conr = new conectar();
+                    Connection conexionr = conr.conexion();
+                    
+                    Statement sr = conexion.createStatement();
+                    ResultSet rsr = sr.executeQuery(sqlr);    
+                    while(rsr.next()){
+                       
+                    if(rsr.getInt(1)==ID){
+                         verificar_fecha=true;
+                    }
+               
+                    }
+                    
+                    
+                    if(verificar_fecha==false){
+                                String sql12 = " UPDATE cliente SET Habilitado='v' WHERE Id_Cliente=?";
+                
+                
+                PreparedStatement pst1 = conexion.prepareStatement(sql12);
+                pst1.setInt(1, ID);
+                
+                
+                
+                 pst1.executeUpdate();
+                
+                                
                                 String sql1 = " call historialCliente(?)";
                 
                 
@@ -114,7 +142,7 @@ public class LeerHuella_Clientes extends CapturarHuella{
                 
                 
                  pst.executeUpdate();
-                
+                    }
                             }else {
                                 
                          JOptionPane.showMessageDialog(null, "Huella no Registrada");     

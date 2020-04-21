@@ -23,7 +23,17 @@ import java.awt.event.ComponentEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import sun.misc.BASE64Decoder;
 
 /**
  *
@@ -31,6 +41,8 @@ import javax.swing.ImageIcon;
  */
 public class CapturarHuella extends javax.swing.JDialog {
 private DPFPCapture lector = DPFPGlobal.getCaptureFactory().createCapture();
+ conectar cc = new conectar();
+    Connection conexion = cc.conexion();
     /**
      * Creates new form CapturarHuella
      */
@@ -49,9 +61,53 @@ private DPFPCapture lector = DPFPGlobal.getCaptureFactory().createCapture();
     }
     
     });
+        
+    }
+    void cargar() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_DEFAULT));
+                jLabel1.setText(null);
+                jLabel1.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+public static BufferedImage decodeToImage(String imageString) {
+
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
     }
     public void init(){
          this.setLocationRelativeTo(null);
+         
     lector.addDataListener((DPFPDataEvent dpfpde) -> {
             procesarHuella(dpfpde.getSample());
         });
@@ -113,10 +169,16 @@ private DPFPCapture lector = DPFPGlobal.getCaptureFactory().createCapture();
         jPanel2 = new javax.swing.JPanel();
         lblPasos = new javax.swing.JLabel();
         lblHuella = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setSize(new java.awt.Dimension(400, 300));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(128, 128, 128));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -130,6 +192,9 @@ private DPFPCapture lector = DPFPGlobal.getCaptureFactory().createCapture();
         lblHuella.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/lector_conectado.png"))); // NOI18N
         lblHuella.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(lblHuella, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
+
+        jLabel1.setText("jLabel1");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 260));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 360, 260));
 
@@ -147,6 +212,10 @@ private DPFPCapture lector = DPFPGlobal.getCaptureFactory().createCapture();
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+cargar();        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -191,6 +260,7 @@ private DPFPCapture lector = DPFPGlobal.getCaptureFactory().createCapture();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblHuella;

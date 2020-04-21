@@ -59,15 +59,26 @@ public class Rutinas extends javax.swing.JFrame {
     Statement pst= null;
     DefaultTableModel modelo= new DefaultTableModel();
     int cantidad =0;
+
      
     public Rutinas() {
         
         initComponents();
         this.setLocationRelativeTo(null);
-        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
+fot = new ImageIcon(getClass().getResource("/imagenes1/preferences-desktop-accessibility.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(lbver1.getWidth(), lbver1.getHeight(), Image.SCALE_DEFAULT));
+        lbver1.setIcon(icono);
 
+        this.repaint();
+        fot = new ImageIcon(getClass().getResource("/imagenes1/preferences-desktop-accessibility.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(lbver2.getWidth(), lbver2.getHeight(), Image.SCALE_DEFAULT));
+        lbver2.setIcon(icono);
+
+        this.repaint();
+cargarf();
 id();
 jComboBox1.removeAllItems();
           jComboBox1.addItem ("Lunes");
@@ -87,6 +98,46 @@ jComboBox1.removeAllItems();
          mostrar();
          
         
+    }
+    
+     void cargarf() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel6.getWidth(), jLabel6.getHeight(), Image.SCALE_DEFAULT));
+                jLabel6.setText(null);
+                jLabel6.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+      public void limpiar(){
+      
+                 try {
+                     String sql1= "delete from rutinas where Habilitado='v' and Cliente_Id_Cliente="+ID_Cliente+"";
+                     
+                     PreparedStatement pst = conexion.prepareStatement(sql1);
+                    
+                   pst.executeUpdate();
+                 } catch (SQLException ex) {
+                     Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+                 }
     }
     public void cargarb(){
     
@@ -112,81 +163,44 @@ jComboBox1.removeAllItems();
              lbver1.setText(null);
              lbver1.setIcon(icono);
          } catch (SQLException ex) {
-             Logger.getLogger(Membresia.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(Rutinas.class.getName()).log(Level.SEVERE, null, ex);
          }
             
 
     
     }
-      void cargar(int limite) {
-        
-          String imagen_string = "";
-     
-         
-     
+     public void cargarc(){
+     int fila = jTable1.getSelectedRow();
+        String valor = jTable1.getValueAt(fila, 1).toString();
+         try {
+             String imagen_string = "";
+    
+             String sql = "SELECT imagen FROM ejercicio where Nombre_Ejercicio ='"+valor+"'";
+              System.out.print(sql);
+             
+             
+             
+             
+             Statement s = conexion.createStatement();
+             ResultSet rs = s.executeQuery(sql);
+             while (rs.next()) {
+                 imagen_string = rs.getString(1);
+                 
+             }
+             
+             BufferedImage img =  decodeToImage(imagen_string);
+            ImageIcon icon  = new ImageIcon(img);
+             Icon icono  = new ImageIcon(icon.getImage().getScaledInstance(lbver2.getWidth(), lbver2.getHeight(), Image.SCALE_DEFAULT));
+             lbver2.setText(null);
+             lbver2.setIcon(icono);
+         } catch (SQLException ex) {
+             Logger.getLogger(Rutinas.class.getName()).log(Level.SEVERE, null, ex);
+         }
+            
 
-        try {
-   String sql = "select imagen, Nombre_Ejercicio,Dia from ejercicio INNER JOIN rutinas ON ejercicio.Clave_Ejercicio = rutinas.Clave_Ejercicio where Cliente_Id_Cliente ="+ID_Cliente+" limit " + limite +", 1";
-        
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sql);
-            while (rs.next()) {
-                imagen_string = rs.getString(1);
-                lb_nombre.setText(rs.getString(2));
-                jTextField1.setText(rs.getString(3));
-            }
-          
-            if (imagen_string == null) {
-                cont = cont - 1;
-                contar();
-            } else {
-                
-                BufferedImage img = decodeToImage(imagen_string);
-                ImageIcon icon = new ImageIcon(img);
-                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lbver.getWidth(), lbver.getHeight(), Image.SCALE_DEFAULT));
-                lbver.setText(null);
-                lbver.setIcon(icono);
-            }
-System.out.print(" "+sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(Rutinas.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    
     }
-      void contar() {
-          
-        String sql2 = "SELECT count(*) as cont from ejercicio INNER JOIN rutinas ON ejercicio.Clave_Ejercicio = rutinas.Clave_Ejercicio  where Cliente_Id_Cliente ="+ID_Cliente+"";
-        try {
-            int con = 0;
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sql2);
-            while (rs.next()) {
-                con = rs.getInt("cont");
-            }
-            if (con == 0) {
-                lb_nombre.setText("No se encontraron imagenes");
-            } else {
-                cont = con - 1;
-                cargar(cont);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Rutinas.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.print(" "+sql2);
-    }
-       
-     public void limpiar(){
-      
-                 try {
-                     String sql1= "delete from rutinas where Habilitado='v' and Cliente_Id_Cliente="+ID_Cliente+"";
-                     
-                     PreparedStatement pst = conexion.prepareStatement(sql1);
-                    
-                   pst.executeUpdate();
-                 } catch (SQLException ex) {
-                     Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-    }
+    
      public void mostrar(){
      try {
         
@@ -478,8 +492,6 @@ System.out.print(" "+sql);
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -492,12 +504,12 @@ System.out.print(" "+sql);
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        lbver = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        lb_nombre = new javax.swing.JTextField();
         lbver1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        lbver2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -536,23 +548,8 @@ System.out.print(" "+sql);
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, -1, -1));
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 120, -1, -1));
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, -1, 100));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, -1, -1));
@@ -585,13 +582,18 @@ System.out.print(" "+sql);
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 120, -1, -1));
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 120, -1, -1));
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 40, 10));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox2ItemStateChanged(evt);
+            }
+        });
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
             }
         });
         jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, -1, -1));
@@ -603,12 +605,12 @@ System.out.print(" "+sql);
             }
         });
         jComboBox3.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jComboBox3AncestorMoved(evt);
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                jComboBox3AncestorMoved(evt);
             }
         });
         jComboBox3.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -620,8 +622,20 @@ System.out.print(" "+sql);
             }
         });
         jComboBox3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBox3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jComboBox3MouseEntered(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jComboBox3MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jComboBox3MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jComboBox3MouseReleased(evt);
             }
         });
         jComboBox3.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -639,11 +653,11 @@ System.out.print(" "+sql);
             }
         });
         jComboBox3.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                jComboBox3InputMethodTextChanged(evt);
-            }
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
                 jComboBox3CaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                jComboBox3InputMethodTextChanged(evt);
             }
         });
         jComboBox3.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -664,10 +678,10 @@ System.out.print(" "+sql);
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, -1, -1));
+        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, -1, -1));
 
         jLabel1.setText("Disciplina :");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, -1, 30));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, -1, 30));
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 70, 30));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -678,26 +692,45 @@ System.out.print(" "+sql);
             }
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 130));
-        jPanel2.add(lbver, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 370, 160, 100));
 
-        jButton5.setText(">>");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+        lbver1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbver1MouseEntered(evt);
             }
         });
-        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 480, -1, -1));
+        jPanel2.add(lbver1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, 160, 110));
 
-        jButton6.setText("<<");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+        lbver2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbver2MouseEntered(evt);
             }
         });
-        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 480, -1, -1));
-        jPanel2.add(lb_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 340, 170, -1));
-        jPanel2.add(lbver1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 160, 100));
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 340, 70, -1));
+        jPanel2.add(lbver2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 160, 130));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jScrollPane2.setViewportView(jScrollPane1);
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 530, 170));
+
+        jLabel6.setText("jLabel6");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
@@ -709,7 +742,7 @@ System.out.print(" "+sql);
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 30));
 
         jLabel15.setForeground(new java.awt.Color(250, 234, 128));
         jLabel15.setText("Rutinas");
@@ -756,7 +789,7 @@ this.setVisible(false);        // TODO add your handling code here:
         System.out.print(ID);     
 mostrar();  
 cargar1();
-contar();
+
 // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
@@ -864,8 +897,9 @@ visualizar();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
-
 cambio();
+
+
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ItemStateChanged
@@ -898,32 +932,13 @@ jButton4.setEnabled(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseClicked
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-cont = cont + 1;
-        cargar(cont);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-/* cont = cont + 1;
-        cargar(cont);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
-
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        private void formWindowActivated(java.awt.event.WindowEvent evt) {   
-        */
-if (cont == 0) {
-            cargar(cont);
-        } else if (cont < 0) {
-            cargar(cont = 0);
-        } else {
-            cont = cont - 1;
-            cargar(cont);
-        }
+       
+
     }//GEN-LAST:event_formWindowActivated
 
     private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
-
 
 
 
@@ -959,7 +974,7 @@ if (cont == 0) {
     }//GEN-LAST:event_jComboBox3ComponentHidden
 
     private void jComboBox3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox3FocusLost
-cargarb();             // TODO add your handling code here:
+            // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox3FocusLost
 
     private void jComboBox3CaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jComboBox3CaretPositionChanged
@@ -974,7 +989,42 @@ cargarb();             // TODO add your handling code here:
 cargarb();  
 // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox3MouseExited
-     private void formWindowActivated(java.awt.event.WindowEvent evt) {  }
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox3MouseEntered
+cargarb();          // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3MouseEntered
+
+    private void jComboBox3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox3MousePressed
+          // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3MousePressed
+
+    private void jComboBox3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox3MouseReleased
+         // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3MouseReleased
+
+    private void jComboBox3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox3MouseClicked
+         // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3MouseClicked
+
+    private void lbver1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbver1MouseEntered
+cargarb();          // TODO add your handling code here:
+    }//GEN-LAST:event_lbver1MouseEntered
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    cargarc();
+      
+  
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void lbver2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbver2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbver2MouseEntered
+  
     /**
      * @param args the command line arguments
      */
@@ -1030,8 +1080,6 @@ cargarb();
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -1041,16 +1089,16 @@ cargarb();
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     public javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel label_imagen;
-    private javax.swing.JTextField lb_nombre;
-    private javax.swing.JLabel lbver;
     private javax.swing.JLabel lbver1;
+    private javax.swing.JLabel lbver2;
     // End of variables declaration//GEN-END:variables
 }

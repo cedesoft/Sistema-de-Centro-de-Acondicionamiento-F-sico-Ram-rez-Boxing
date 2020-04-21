@@ -5,7 +5,7 @@
  */
 package Ventanas;
 
-import static Ventanas.subir_imagen.decodeToImage;
+
 import static Ventanas.subir_imagen.encodeToString;
 import clases.LeerHuella;
 import java.awt.Desktop;
@@ -63,10 +63,14 @@ public class ejercicio extends javax.swing.JFrame {
         
         initComponents();
         this.setLocationRelativeTo(null);
-         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
+ fot = new ImageIcon(getClass().getResource("/imagenes1/preferences-desktop-accessibility.png"));
+        icono = new ImageIcon(fot.getImage().getScaledInstance(lbver2.getWidth(), lbver2.getHeight(), Image.SCALE_DEFAULT));
+        lbver2.setIcon(icono);
 
+        this.repaint();
 
 jComboBox2.removeAllItems();
           jComboBox2.addItem ("Clave_Ejercicio");
@@ -78,14 +82,55 @@ jComboBox2.removeAllItems();
          jComboBox1.addItem ("Pierna");
          jComboBox1.addItem ("Pantorrila");
          jComboBox1.addItem ("Abdomen");
-          
+          cargarf();
         desactivar();
         desactivar1();
         mostrar();
 
         actualizar();
     }
-    
+     void cargarf() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel3.getWidth(), jLabel3.getHeight(), Image.SCALE_DEFAULT));
+                jLabel3.setText(null);
+                jLabel3.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+      public static BufferedImage decodeToImage(String imageString) {
+
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
     public void ingresar(){
     if (!jTextField1.getText().equals("")) {
             try {
@@ -162,11 +207,12 @@ jComboBox2.removeAllItems();
              System.out.print(columna+""+fila);
              
              if(columna==1){
+               if (jTable1.getValueAt(fila, columna).toString().matches("^[a-zA-Z ]{1,45}?$")) {  
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
                  try {
-                     String sql1= " update ejercicio set Nombre_Ejercicio= ? where Clave_Ejercicio="+jTable1.getValueAt(fila,0)+"";
+                     String sql1= " update ejercicio set Nombre_Ejercicio= ? where Clave_Ejercicio='"+jTable1.getValueAt(fila,0)+"'";
                      
                      PreparedStatement pst = conexion.prepareStatement(sql1);
                      pst.setString(1,(String) jTable1.getValueAt(fila,columna) );
@@ -175,14 +221,18 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(ejercicio.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
+             }else{
+                   JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres");
+                                mostrar();
+               }}
              
               if(columna==2){
+                  if (jTable1.getValueAt(fila, columna).toString().matches("^[a-zA-Z ]{1,45}?$")) {
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
                  try {
-                     String sql1= " update ejercicio set Musculo= ? where Clave_Ejercicio="+jTable1.getValueAt(fila,0)+"";
+                     String sql1= "UPDATE ejercicio SET Musculo=? WHERE Clave_Ejercicio='" + jTable1.getValueAt(fila, 0) + "'";
                      
                      PreparedStatement pst = conexion.prepareStatement(sql1);
                      pst.setString(1,(String) jTable1.getValueAt(fila,columna) );
@@ -191,7 +241,10 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(ejercicio.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
+             }else{
+                      JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres");
+                                mostrar();
+                  }}
              
              
              
@@ -328,7 +381,38 @@ if(valor){
        
     }
     
-  
+    public void cargarc(){
+     int fila = jTable1.getSelectedRow();
+        String valor = jTable1.getValueAt(fila, 1).toString();
+         try {
+             String imagen_string = "";
+    
+             String sql = "SELECT imagen FROM ejercicio where Nombre_Ejercicio ='"+valor+"'";
+              System.out.print(sql);
+             
+             
+             
+             
+             Statement s = conexion.createStatement();
+             ResultSet rs = s.executeQuery(sql);
+             while (rs.next()) {
+                 imagen_string = rs.getString(1);
+                 
+             }
+             
+             BufferedImage img =  decodeToImage(imagen_string);
+            ImageIcon icon  = new ImageIcon(img);
+             Icon icono  = new ImageIcon(icon.getImage().getScaledInstance(lbver2.getWidth(), lbver2.getHeight(), Image.SCALE_DEFAULT));
+             lbver2.setText(null);
+             lbver2.setIcon(icono);
+         } catch (SQLException ex) {
+             Logger.getLogger(Rutinas.class.getName()).log(Level.SEVERE, null, ex);
+         }
+            
+
+    
+    }
+    
   
     
     
@@ -354,8 +438,6 @@ if(valor){
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         jTextField7 = new javax.swing.JTextField();
@@ -368,6 +450,11 @@ if(valor){
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        lbver2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -415,39 +502,19 @@ if(valor){
                 jTextField3ActionPerformed(evt);
             }
         });
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 140, -1));
+
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 140, -1));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jTable1MouseEntered(evt);
-            }
-        });
-        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTable1KeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTable1KeyTyped(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, -1, -1));
 
         jButton3.setText("Eliminnar");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -464,6 +531,12 @@ if(valor){
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 0, -1, -1));
+
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField7KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 70, -1));
 
         jButton4.setText("Buscar");
@@ -507,6 +580,49 @@ if(valor){
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
         jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 130, -1));
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTable1MouseEntered(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTable1KeyTyped(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jScrollPane2.setViewportView(jScrollPane1);
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, 500, 200));
+
+        lbver2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbver2MouseEntered(evt);
+            }
+        });
+        jPanel2.add(lbver2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 440, 160, 110));
+
+        jLabel3.setText("jLabel3");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
         label_imagen.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -517,7 +633,7 @@ if(valor){
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 30));
 
         jLabel15.setForeground(new java.awt.Color(250, 234, 128));
         jLabel15.setText("Ejercicios");
@@ -741,7 +857,7 @@ this.ID = Integer.valueOf(jLabel2.getText());
     }//GEN-LAST:event_formKeyTyped
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-      // TODO add your handling code here:
+cargarc();      // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseEntered
@@ -805,6 +921,31 @@ actualizar();// TODO add your handling code here:
         actualizar();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        if (!jTextField3.getText().matches("^[a-zA-Z0-9 ]{1,45}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos o letras");
+            jTextField3.setText("");
+        }
+    }//GEN-LAST:event_jTextField3KeyReleased
+
+    private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
+        if (!jTextField4.getText().matches("^[a-zA-Z ]{1,45}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan letras");
+            jTextField4.setText("");
+        }
+    }//GEN-LAST:event_jTextField4KeyReleased
+
+    private void jTextField7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyReleased
+        if (!jTextField3.getText().matches("^[a-zA-Z0-9 ]{1,45}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos o letras");
+            jTextField3.setText("");
+        }
+    }//GEN-LAST:event_jTextField7KeyReleased
+
+    private void lbver2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbver2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbver2MouseEntered
     
     /**
      * @param args the command line arguments
@@ -867,17 +1008,20 @@ actualizar();// TODO add your handling code here:
     private javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JLabel label_imagen;
+    private javax.swing.JLabel lbver2;
     // End of variables declaration//GEN-END:variables
 }

@@ -67,13 +67,14 @@ public class Clientes extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         
-         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
 fot = new ImageIcon(getClass().getResource("/imagenes1/avatar.png"));
         icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_DEFAULT));
 jLabel1.setIcon(icono);
 this.repaint();
+cargar();
 jComboBox2.removeAllItems();
           jComboBox2.addItem ("Nombre");
           jComboBox2.addItem ("Id_Usuario");
@@ -91,7 +92,48 @@ jComboBox2.removeAllItems();
         
     }
     
-    
+    void cargar() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel20.getWidth(), jLabel20.getHeight(), Image.SCALE_DEFAULT));
+                jLabel20.setText(null);
+                jLabel20.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+public static BufferedImage decodeToImage(String imageString) {
+
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
     
     
     
@@ -108,6 +150,7 @@ jComboBox2.removeAllItems();
              System.out.print(columna+""+fila);
              
              if(columna==1){
+                 if (jTable1.getValueAt(fila, columna).toString().matches("^[a-zA-Z ]{1,45}?$")) {
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -121,8 +164,15 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
+             }else{
+                     JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres");
+                                mostrar();
+                 }
              }
+             
+             
              if(columna==2){
+                if (jTable1.getValueAt(fila, columna).toString().matches("^[a-zA-Z ]{1,45}?$")) { 
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -136,8 +186,12 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
+             }else{
+                    JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres");
+                                mostrar();
+                }}
              if(columna==3){
+                 if (jTable1.getValueAt(fila, columna).toString().matches("^[0-9 ]{1,15}?$")) { 
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -151,8 +205,12 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
+             }else{
+                     JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres numericos");
+                                mostrar();
+                 }}
              if(columna==4){
+                 if (jTable1.getValueAt(fila, columna).toString().matches("^[a-zA-Z ]{1,45}?$")) { 
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -166,9 +224,13 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
+             }else{
+                    JOptionPane.showMessageDialog(null, "Solo se aceptan letras");
+                                mostrar(); 
+                 }}
              
              if(columna==5){
+                 if (jTable1.getValueAt(fila, columna).toString().matches("^[a-zA-Z ]{1,45}?$")) { 
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -182,8 +244,14 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
+             }else{
+                     JOptionPane.showMessageDialog(null, "Solo se aceptan letras");
+                                mostrar(); 
+                 }}
+             
+             
              if(columna==6){
+                 if (jTable1.getValueAt(fila, columna).toString().matches("^[0-9]+([.][0-9]+)?$")) { 
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -197,8 +265,12 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
+             }else{
+                     JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres numericos");
+                                mostrar(); 
+                 }}
              if(columna==7){
+                if (jTable1.getValueAt(fila, columna).toString().matches("^[0-9]+([.][0-9]+)?$")) {  
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -212,8 +284,12 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
-             if(columna==7){
+             }else{
+                 JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres numericos");
+                                mostrar();    
+                }}
+             if(columna==8){
+                 if (jTable1.getValueAt(fila, columna).toString().matches("^[0-9]+([.][0-9]+)?$")) {  
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -227,8 +303,12 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
-              if(columna==8){
+             }else{
+                     JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres numericos");
+                                mostrar();   
+                 }}
+              if(columna==9){
+                  if (jTable1.getValueAt(fila, columna).toString().matches("^[0-9]+([.][0-9]+)?$")) {  
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -242,8 +322,12 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
-               if(columna==8){
+             }else{
+                    JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres numericos");
+                                mostrar();     
+                  }}
+               if(columna==10){
+                   if (jTable1.getValueAt(fila, columna).toString().matches("^[0-9]+([.][0-9]+)?$")) {  
              int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro?");
 if(resp==JOptionPane.YES_OPTION){
                   
@@ -257,7 +341,10 @@ if(resp==JOptionPane.YES_OPTION){
                      Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
                  }
             }
-             }
+             }else{
+                    JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres numericos");
+                                mostrar();        
+                   }}
             
               
          
@@ -518,8 +605,6 @@ datos[11]=false;
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         jTextField7 = new javax.swing.JTextField();
@@ -545,6 +630,10 @@ datos[11]=false;
         jLabel18 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel20 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
 
@@ -600,34 +689,40 @@ datos[11]=false;
 
         jLabel6.setText("Enfermedad");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, -1, -1));
+
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 140, -1));
+
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 140, -1));
 
         jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField5KeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField5KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField5KeyTyped(evt);
             }
         });
         jPanel2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 140, -1));
-        jPanel2.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 140, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField6KeyReleased(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 840, -1));
+        });
+        jPanel2.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 140, -1));
 
         jButton3.setText("Eliminnar");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -644,6 +739,12 @@ datos[11]=false;
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, -1, -1));
+
+        jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField7KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 70, -1));
 
         jButton4.setText("Buscar");
@@ -668,6 +769,11 @@ datos[11]=false;
                 jTextField8ActionPerformed(evt);
             }
         });
+        jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField8KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 140, -1));
 
         jLabel8.setText("Nombre");
@@ -689,6 +795,9 @@ datos[11]=false;
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, -1, -1));
 
         jTextField14.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField14KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField14KeyTyped(evt);
             }
@@ -699,6 +808,9 @@ datos[11]=false;
         jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, -1, -1));
 
         jTextField15.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField15KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField15KeyTyped(evt);
             }
@@ -712,6 +824,9 @@ datos[11]=false;
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField16KeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField16KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField16KeyTyped(evt);
             }
@@ -722,6 +837,9 @@ datos[11]=false;
         jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, -1));
 
         jTextField17.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField17KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField17KeyTyped(evt);
             }
@@ -732,6 +850,9 @@ datos[11]=false;
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, -1, -1));
 
         jTextField18.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField18KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField18KeyTyped(evt);
             }
@@ -752,6 +873,26 @@ datos[11]=false;
         });
         jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, -1, -1));
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jScrollPane2.setViewportView(jScrollPane1);
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 840, 320));
+
+        jLabel20.setText("jLabel20");
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
         label_imagen.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -762,7 +903,7 @@ datos[11]=false;
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 30));
 
         jLabel19.setForeground(new java.awt.Color(250, 234, 128));
         jLabel19.setText("Clientes");
@@ -1083,6 +1224,84 @@ mostrar();
 actualizar();
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        if (!jTextField3.getText().matches("^[a-zA-Z ]{1,45}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres de la a-z");
+            jTextField3.setText("");
+        }
+    }//GEN-LAST:event_jTextField3KeyReleased
+
+    private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
+        if (!jTextField4.getText().matches("^[a-zA-Z ]{1,45}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres de la a-z");
+            jTextField4.setText("");
+        }
+    }//GEN-LAST:event_jTextField4KeyReleased
+
+    private void jTextField5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyReleased
+        if (!jTextField5.getText().matches("^[0-9]{1,15}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField5.setText("");
+        }
+    }//GEN-LAST:event_jTextField5KeyReleased
+
+    private void jTextField6KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyReleased
+        if (!jTextField6.getText().matches("^[a-zA-Z ]{1,45}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres de la a-z");
+            jTextField6.setText("");
+        }
+    }//GEN-LAST:event_jTextField6KeyReleased
+
+    private void jTextField8KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyReleased
+        if (!jTextField8.getText().matches("^[a-zA-Z ]{1,45}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres de la a-z");
+            jTextField8.setText("");
+        }
+    }//GEN-LAST:event_jTextField8KeyReleased
+
+    private void jTextField14KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField14KeyReleased
+        if (!jTextField14.getText().matches("^[0-9. ]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField14.setText("");
+        }
+    }//GEN-LAST:event_jTextField14KeyReleased
+
+    private void jTextField15KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField15KeyReleased
+        if (!jTextField15.getText().matches("^[0-9. ]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField15.setText("");
+        }
+    }//GEN-LAST:event_jTextField15KeyReleased
+
+    private void jTextField16KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField16KeyReleased
+        if (!jTextField16.getText().matches("^[0-9. ]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField16.setText("");
+        }
+    }//GEN-LAST:event_jTextField16KeyReleased
+
+    private void jTextField17KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField17KeyReleased
+        if (!jTextField17.getText().matches("^[0-9. ]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField17.setText("");
+        }
+    }//GEN-LAST:event_jTextField17KeyReleased
+
+    private void jTextField18KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField18KeyReleased
+        if (!jTextField18.getText().matches("^[0-9. ]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField18.setText("");
+        }
+    }//GEN-LAST:event_jTextField18KeyReleased
+
+    private void jTextField7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyReleased
+        if (jTextField7.getText().matches("^[a-zA-Z ]{1,45}?$") || jTextField7.getText().matches("^[0-9]{1,4}?$")) {
+        } else {
+            JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres A-Z o numero");
+            jTextField7.setText("");
+        }
+    }//GEN-LAST:event_jTextField7KeyReleased
    
     /**
      * @param args the command line arguments
@@ -1142,6 +1361,7 @@ actualizar();
     private javax.swing.JLabel jLabel18;
     public javax.swing.JLabel jLabel19;
     public javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1152,6 +1372,7 @@ actualizar();
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField14;

@@ -60,10 +60,10 @@ public class Pagos_Provedor extends javax.swing.JFrame {
         
         initComponents();
         this.setLocationRelativeTo(null);
-        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
-
+cargar();
 id();
 id1();
 jComboBox3.removeAllItems();
@@ -77,13 +77,13 @@ jComboBox3.removeAllItems();
                  null,
                  new String [] {
                      //Defines TODOS los nombres de las columnas que tendrá la tabla
-                     "Id_Producto","Nombre_Producto", "Cantidad_Producto", "Precio_Producto", "Eliminar"
+                     "Nombre_Compañia","Nombre_Proveedor","Cantidad_Dinero", "Fecha_Pago","Cantidad_producto", "Nombre_Producto", "Eliminar"
                  }
          ) {
              Class[] types = new Class [] {
                  //Defines el tipo que admitirá la COLUMNA, cada uno con el índice correspondiente
                  //Codigo (Integer), Cantidad (Integer), Nombre (String), Precio(Double)
-                 java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class,java.lang.Boolean.class
+                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
              };
              
              //Función que asignará el tipo de campo que asignaste previamente
@@ -92,6 +92,48 @@ jComboBox3.removeAllItems();
              }
          });modelo=(DefaultTableModel) jTable1.getModel();
         
+    }
+     void cargar() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel3.getWidth(), jLabel3.getHeight(), Image.SCALE_DEFAULT));
+                jLabel3.setText(null);
+                jLabel3.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+public static BufferedImage decodeToImage(String imageString) {
+
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
     }
     
      public void eliminar(){
@@ -109,7 +151,7 @@ jComboBox3.removeAllItems();
         for (int i = 0; i < jTable1.getRowCount(); i++) {
 
  
- if((Boolean) jTable1.getValueAt(i, 4))
+ if((Boolean) jTable1.getValueAt(i, 6))
 {
    
  check1 = true;
@@ -171,22 +213,28 @@ jComboBox3.removeAllItems();
                   String valor = (String) jComboBox1.getSelectedItem();
 
          
-         String sql= "select Id_Producto, Nombre_Producto,Precio_Producto from producto where Nombre_Producto='"+valor+"'";
-        Object [] datos = new Object[5];
+         String sql= "select proveedor.Nombre_Compañia, proveedor.Nombre_Proveedor, CURDATE(), Nombre_Producto  from producto INNER JOIN proveedor ON producto.Id_provedor = proveedor.Id_Provedor where producto.Nombre_Producto='"+valor+"'";
+        Object [] datos = new Object[7];
          
         cantidad = Integer.parseInt(jTextField1.getText());
+         int cantidad1 = Integer.parseInt(jTextField3.getText());
          
          Statement s = conexion.createStatement();
          ResultSet rs = s.executeQuery(sql);
          
          while(rs.next()){
-              datos[0]=rs.getInt(1);
+              datos[0]=rs.getString(1);
              datos[1]=rs.getString(2);
-              datos[2]=cantidad;
-             datos[3]=rs.getInt(3);
+              datos[2]=""+cantidad1;
+             datos[3]=rs.getString(3);
+                datos[4]=""+cantidad+"";
+                   
+                   datos[5]=rs.getString(4);
+                     datos[6]=true;
+                
        
              
-              datos[4]=true;
+        
            
              
              
@@ -203,28 +251,70 @@ jComboBox3.removeAllItems();
         
         
     }
-    
-    void guardar_imagen(String imagen, String nombre, byte[] huella) {
-        String sql = "";
-       sql = "INSERT INTO empleado (huella, imagen) VALUES (?, ?)";
-        try {
-
-            PreparedStatement pst = conexion.prepareStatement(sql);
-            pst.setBytes(1, huella);
-            pst.setString(2, imagen);
+    public void mostrar(){
+     try {
+         DefaultTableModel modelo= new DefaultTableModel();
+         
+         
+         
+         jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                 null,
+                 new String [] {
+                     //Defines TODOS los nombres de las columnas que tendrá la tabla
+                     "Nombre_Compañia","Nombre_Proveedor","Cantidad_Dinero", "Fecha_Pago","Cantidad_producto", "Nombre_Producto", "Eliminar"
+                 }
+         ) {
+             Class[] types = new Class [] {
+                 //Defines el tipo que admitirá la COLUMNA, cada uno con el índice correspondiente
+                 //Codigo (Integer), Cantidad (Integer), Nombre (String), Precio(Double)
+                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class , java.lang.Boolean.class
+             };
              
-            
-            int n = pst.executeUpdate();
-            if (n > 0) {
-                System.out.println("Registro guardado");
+             //Función que asignará el tipo de campo que asignaste previamente
+             public Class getColumnClass(int columnIndex) {
+                 return types [columnIndex];
+             }
+         });
+         modelo=(DefaultTableModel) jTable1.getModel();
+         
+        String sql1= "select proveedor.Nombre_Compañia, proveedor.Nombre_Proveedor, Cantidad_Dinero, Fecha_Pago, pagos_provedor.Cantidad_producto, producto.Nombre_Producto  from pagos_provedor INNER JOIN proveedor ON Proveedor_Id_Provedor = proveedor.Id_Provedor INNER JOIN producto ON producto.Id_Producto = pagos_provedor.Id_producto  ";
+         
+       Object [] datos = new Object[7];
+         
+        
+
+         Statement s = conexion.createStatement();
+         ResultSet rs = s.executeQuery(sql1);
+         
+       
+            while(rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                 datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
+                datos[6]=false;
                
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al insertar el registro.", "Error", JOptionPane.ERROR_MESSAGE);
+                
+
+                
+                modelo.addRow(datos);
             }
-        } catch (SQLException | HeadlessException e) {
-            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, e);
-        }
+
+         
+         
+         jTable1.setModel(modelo);
+     } catch (SQLException ex) {
+         Logger.getLogger(Administradores.class.getName()).log(Level.SEVERE, null, ex);
+     }
+            
+         
+        
+       
     }
+    
+   
      
 
     /**
@@ -240,8 +330,6 @@ jComboBox3.removeAllItems();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
@@ -252,6 +340,10 @@ jComboBox3.removeAllItems();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox3 = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -290,27 +382,15 @@ jComboBox3.removeAllItems();
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, -1, -1));
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, -1, -1));
-
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField1KeyTyped(evt);
             }
@@ -319,6 +399,12 @@ jComboBox3.removeAllItems();
 
         jLabel1.setText("Pago");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, -1, -1));
+
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 80, -1));
 
         jButton1.setText("Buscar");
@@ -356,6 +442,9 @@ jComboBox3.removeAllItems();
             }
         });
         jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField3KeyTyped(evt);
             }
@@ -371,6 +460,26 @@ jComboBox3.removeAllItems();
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 0, -1, -1));
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        jScrollPane1.setViewportView(jScrollPane2);
+
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 640, 350));
+
+        jLabel3.setText("jLabel3");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
         label_imagen.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -381,7 +490,7 @@ jComboBox3.removeAllItems();
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 30));
 
         jLabel15.setForeground(new java.awt.Color(250, 234, 128));
         jLabel15.setText("Pagos");
@@ -432,7 +541,8 @@ this.setVisible(false);        // TODO add your handling code here:
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 this.ID = Integer.valueOf(jLabel2.getText());
-        System.out.print(ID);
+        
+        mostrar();
       // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
@@ -477,7 +587,7 @@ boolean check = false;
         for (int i = 0; i < jTable1.getRowCount(); i++) {
 
  
- if((Boolean) jTable1.getValueAt(i, 4))
+ if((Boolean) jTable1.getValueAt(i, 6))
 {
    
  check = true;
@@ -500,11 +610,14 @@ desactivar1();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseEntered
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-String comprobar="";
+int id_p=0;
+ int n =0; 
+ int id =0;
+ for (int i = 0; i < jTable1.getRowCount(); i++) {
          try {
         
          
-         String sql2= "select Id_Provedor from proveedor where Nombre_Proveedor='"+jComboBox2.getSelectedItem()+"'";
+         String sql2= "select proveedor.Id_Provedor,  Id_Producto  from producto INNER JOIN proveedor ON producto.Id_provedor = proveedor.Id_Provedor where producto.Nombre_Producto='"+(String)jTable1.getValueAt(i, 5)+"'";
       
          
         
@@ -514,12 +627,13 @@ String comprobar="";
          
          while(rs.next()){
          
-             comprobar=rs.getString(1);
+             id_p=rs.getInt(1);
+              id=rs.getInt(2);
          }} catch (SQLException ex) {
          Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
      }
         try {
-        int n =0;     
+           
             
             pst = conexion.createStatement();
             statement = conexion.createStatement();
@@ -527,38 +641,48 @@ String comprobar="";
             
             
            
-                String sql = "INSERT INTO pagos_provedor (Proveedor_Id_Provedor, Cantidad_Dinero, Fecha_Pago) VALUES (?, ?, CURDATE())";
+                String sql = "INSERT INTO pagos_provedor (Proveedor_Id_Provedor, Cantidad_Dinero, Fecha_Pago, Cantidad_producto, Id_producto) VALUES ("+id_p+", "+(String)jTable1.getValueAt(i, 2)+",'"+(String)jTable1.getValueAt(i, 3)+"',"+(String)jTable1.getValueAt(i, 4)+","+id+")";
        
 
             PreparedStatement pst = conexion.prepareStatement(sql);
-            pst.setString(1, comprobar);
-            pst.setString(2, (String)jTextField3.getText());
+ 
+         
+   
+              
+            
           
             
 
-         
+          if((Boolean) jTable1.getValueAt(i, 6)){
         
      n = pst.executeUpdate();
-                 
+          }
+        
+     } catch (SQLException ex) {
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+ }
            if (n > 0) {
        JOptionPane.showMessageDialog(null, "Registro guardado");
               for (int i = 0; i < jTable1.getRowCount(); i++) {
                   
                
-                    String sql1 = "UPDATE producto SET Cantidad_Producto = Cantidad_Producto + ? where Id_Producto=?";
-       
-
-           pst = conexion.prepareStatement(sql1);
-            pst.setInt(1, (Integer)jTable1.getValueAt(i, 2));
-            pst.setInt(2, (Integer)jTable1.getValueAt(i, 0));
-          System.out.print(sql1);
-            
-if((Boolean) jTable1.getValueAt(i, 4)){
-
- pst.executeUpdate();
-
-
-} 
+           try {
+               String sql1 = "UPDATE producto SET Cantidad_Producto = Cantidad_Producto + "+jTable1.getValueAt(i, 4)+" where Nombre_Producto='"+jTable1.getValueAt(i, 5)+"'";
+               PreparedStatement pst = conexion.prepareStatement(sql1);
+               
+               pst = conexion.prepareStatement(sql1);
+               
+               System.out.print(sql1);
+               
+               if((Boolean) jTable1.getValueAt(i, 6)){
+                   
+                   pst.executeUpdate();
+                   
+                    
+               }          } catch (SQLException ex) {
+               Logger.getLogger(Pagos_Provedor.class.getName()).log(Level.SEVERE, null, ex);
+           }
  }      
            
            
@@ -570,9 +694,7 @@ if((Boolean) jTable1.getValueAt(i, 4)){
             
             
             
-             } catch (SQLException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
-        }        // TODO add your handling code here:
+                   // TODO add your handling code here:
         
         eliminar();
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -600,6 +722,28 @@ if((c<'0'||c>'9'))evt.consume();        // TODO add your handling code here:
     private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3KeyTyped
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+        if (!jTextField3.getText().matches("^[0-9.]{1,6}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField3.setText("");
+        }
+    }//GEN-LAST:event_jTextField3KeyReleased
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        if (!jTextField1.getText().matches("^[0-9.]{1,8}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField1.setText("");
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+        if (jTextField2.getText().matches("^[a-zA-Z ]{1,45}?$")) {
+        } else {
+            JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres A-Z ");
+            jTextField2.setText("");
+        }
+    }//GEN-LAST:event_jTextField2KeyReleased
     
     /**
      * @param args the command line arguments
@@ -661,10 +805,12 @@ if((c<'0'||c>'9'))evt.consume();        // TODO add your handling code here:
     private javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

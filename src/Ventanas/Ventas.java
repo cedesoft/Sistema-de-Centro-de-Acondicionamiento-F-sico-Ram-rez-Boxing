@@ -5,7 +5,7 @@
  */
 package Ventanas;
 
-import static Ventanas.subir_imagen.decodeToImage;
+
 import static Ventanas.subir_imagen.encodeToString;
 import clases.LeerHuella;
 import java.awt.Desktop;
@@ -60,10 +60,10 @@ public class Ventas extends javax.swing.JFrame {
         
         initComponents();
         this.setLocationRelativeTo(null);
-        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
+        ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
-
+cargarf();
 id();
 
          
@@ -89,7 +89,52 @@ id();
          });modelo=(DefaultTableModel) jTable1.getModel();
         
     }
-    
+    void cargarf() {
+    ImageIcon icon = null;
+        BufferedImage img = null;
+        String sql = "SELECT * FROM fondo ";
+        String imagen_string = null;
+
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                imagen_string = rs.getString("logo");
+               
+            }
+            
+                img = decodeToImage(imagen_string);
+                 icon = new ImageIcon(img);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel7.getWidth(), jLabel7.getHeight(), Image.SCALE_DEFAULT));
+                jLabel7.setText(null);
+                jLabel7.setIcon(icono);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(subir_imagen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+     public static BufferedImage decodeToImage(String imageString) {
+   byte[] imageByte=null;
+          
+     BufferedImage image = null;
+     BASE64Decoder decoder= null;
+               ByteArrayInputStream bis = null;
+               String imagen_string = null;
+
+        
+        try {
+             decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);
+             bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (IOException e) {
+        }
+        return image;
+    }
      public void eliminar(){
         DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
         int a = jTable1.getRowCount()-1;
@@ -146,7 +191,7 @@ id();
     
      public void id()
     {
-    String sql= "select Nombre_Producto from producto where Habilitado is null or Habilitado = 'e'";
+    String sql= "select Nombre_Producto from producto where Habilitado is null or Habilitado = 's'";
         try {
             Statement s = conexion.createStatement();
             ResultSet rs = s.executeQuery(sql);
@@ -177,7 +222,7 @@ id();
               datos[0]=rs.getInt(1);
              datos[1]=rs.getString(2);
               datos[2]=cantidad;
-             datos[3]=rs.getInt(3);
+             datos[3]=rs.getDouble(3);
        
              
               datos[4]=true;
@@ -233,8 +278,6 @@ id();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -242,6 +285,14 @@ id();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
@@ -277,23 +328,8 @@ id();
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, -1, -1));
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, -1, -1));
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, -1, -1));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, -1, -1));
@@ -304,14 +340,23 @@ id();
             }
         });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField1KeyTyped(evt);
             }
         });
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 80, -1));
+        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 80, -1));
 
-        jLabel1.setText("Cantidad");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, -1, -1));
+        jLabel1.setText("Se pago con");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, -1));
+
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 80, -1));
 
         jButton1.setText("Buscar");
@@ -341,7 +386,60 @@ id();
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, -1, -1));
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, -1, -1));
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField3KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField3KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField3KeyTyped(evt);
+            }
+        });
+        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, 80, -1));
+
+        jLabel4.setText("Cantidad");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, -1, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, 170, 20));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 170, 20));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable1KeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jScrollPane2.setViewportView(jScrollPane1);
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 540, 300));
+
+        jLabel7.setText("jLabel7");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 840, 550));
 
@@ -353,7 +451,7 @@ id();
                 label_imagenMouseEntered(evt);
             }
         });
-        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 30, 20));
+        jPanel1.add(label_imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 30));
 
         jLabel15.setForeground(new java.awt.Color(250, 234, 128));
         jLabel15.setText("Ventas");
@@ -407,7 +505,7 @@ this.setVisible(false);        // TODO add your handling code here:
          }} catch (SQLException ex) {
          Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
      }
-      if("e".equals(comprobar)){
+      if("s".equals(comprobar)){
           agregar();
       }  
       else{try {
@@ -438,6 +536,17 @@ this.setVisible(false);        // TODO add your handling code here:
               
               JOptionPane.showMessageDialog(null, "No hay mas de ese producto");
           }}  
+       DecimalFormat decf = new DecimalFormat("#,##0");
+      Double suma1 = 0.0;
+     String valor1 = "";
+      String valor2 = "";
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+             if((Boolean) jTable1.getValueAt(i, 4)){ 
+ valor1=""+jTable1.getValueAt(i, 2)+"";
+ valor2=""+jTable1.getValueAt(i, 3)+"";
+ 
+             suma1 +=Double.parseDouble(valor1)* Double.parseDouble(valor2);}}
+        jLabel6.setText("El total es: "+(suma1)+"");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -549,7 +658,7 @@ if((Boolean) jTable1.getValueAt(i, 4)){
          }} catch (SQLException ex) {
          Logger.getLogger(Ventas.class.getName()).log(Level.SEVERE, null, ex);
      }
-   if("e".equals(comprobar)){
+   if("s".equals(comprobar)){
               n = pst.executeUpdate();
 
       }  
@@ -602,9 +711,67 @@ desactivar2();
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
 desactivar();  
-char c = evt.getKeyChar();
-if((c<'0'||c>'9'))evt.consume();        // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1KeyTyped
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        if (!jTextField1.getText().matches("^[0-9]+([.][0-9]+)?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField1.setText("");
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+        if (!jTextField2.getText().matches("^[a-zA-Z ]{1,45}?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField2.setText("");
+        }
+    }//GEN-LAST:event_jTextField2KeyReleased
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
+if (!jTextField3.getText().matches("^[0-9]+([.][0-9]+)?$")) {
+            JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
+            jTextField3.setText("");
+        }
+        Double suma = 0.0;
+         String valor1 = "";
+      String valor2 = "";
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+             if((Boolean) jTable1.getValueAt(i, 4)){ 
+ valor1=""+jTable1.getValueAt(i, 2)+"";
+ valor2=""+jTable1.getValueAt(i, 3)+"";
+     
+ suma +=Double.parseDouble(valor1)* Double.parseDouble(valor2);} } 
+       if( jTextField3.getText().length()>0){
+        if(Double.parseDouble(jTextField3.getText())>= suma)
+        {
+jLabel5.setText("El cambio es: "+(Double.parseDouble(jTextField3.getText())-suma)+"");
+         jLabel6.setText("El total es: "+(suma)+"");
+        }
+        
+// TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3KeyReleased
+    }
+    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3KeyTyped
+
+    private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1KeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+
+
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3KeyPressed
     
     /**
      * @param args the command line arguments
@@ -657,12 +824,18 @@ if((c<'0'||c>'9'))evt.consume();        // TODO add your handling code here:
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel label_imagen;
     // End of variables declaration//GEN-END:variables
 }
