@@ -175,18 +175,7 @@ public static BufferedImage decodeToImage(String imageString) {
         }
     }
     public void Ganancias() {
-        try {
-            statement = conexion.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT ((SELECT dinero from caja where dia=CURDATE())+\n" +
-"(SELECT sum(Precio_Producto*ventas.cantidad) as Total_Ventas from producto INNER JOIN  ventas ON  producto.Id_Producto=ventas.Producto_Id_Producto Where ventas.Fecha_Venta=CURDATE())-\n" +
-"((select sum(Cantidad_Dinero) from pagos_provedor  where Fecha_Pago=CURDATE()) +\n" +
-" (select sum(Cantidad_Dinero) from pagos_empleado where Fecha_Pago=CURDATE())))as total");
-            while (rs.next()) {
-                Total_total=rs.getDouble(1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(tareas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            Total_total=(totalcaja+total_ventas)-(total_empleados+total_proveedores);
     }
     
     

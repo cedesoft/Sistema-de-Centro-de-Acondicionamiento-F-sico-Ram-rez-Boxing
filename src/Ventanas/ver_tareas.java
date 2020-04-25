@@ -136,7 +136,7 @@ mostrar();
                 }
             });
             modelo = (DefaultTableModel) jTable1.getModel();
-            String sql = "select tarea.id,concat (Nombre,\' \',Apellidos) as nombre,tarea.Tarea,tarea.Descripcion,tarea.dia from empleado INNER JOIN tarea ON empleado.Id_Usuario = tarea.id_empleado where id_empleado= "+ID+" AND dia >= CURDATE()" ;
+            String sql = "select tarea.id,concat (Nombre,\' \',Apellidos) as nombre,tarea.Tarea,tarea.Descripcion,tarea.dia from empleado INNER JOIN tarea ON empleado.Id_Usuario = tarea.id_empleado";
             Object[] datos = new Object[5];
 
             Statement s = conexion.createStatement();
@@ -201,6 +201,7 @@ mostrar();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -249,7 +250,11 @@ mostrar();
 
         jScrollPane2.setViewportView(jScrollPane1);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 540, 300));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 540, 300));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setText("Tareas Asignadas");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, 230, 40));
 
         jLabel1.setText("jLabel1");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
@@ -365,6 +370,7 @@ mostrar();
     private javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

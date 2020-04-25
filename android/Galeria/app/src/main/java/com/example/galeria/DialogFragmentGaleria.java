@@ -47,6 +47,11 @@ RecyclerAdapter adapter;
         this.ID=id;
 
     }
+    public DialogFragmentGaleria(){
+
+
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,19 +72,11 @@ recyclerViewGaleria.setLayoutManager(new LinearLayoutManager(getContext(),Linear
         listaMenu=new Menu(ID).ListMenu();
 if(listaMenu.size()>0){
         adapter=new RecyclerAdapter(listaMenu, new RecyclerAdapter.OnclikRecycler() {
-
-
-
-
-
             @Override
     public void OnclickItemRecycler(Menu menu) {
-
                 decodedString = Base64.decode(menu.getIdImagen(), Base64.DEFAULT);
                 Glide.with(getContext()).load(decodedString).into(imagen);
-
-
-titulo.setText(menu.getTitulo());
+                titulo.setText(menu.getTitulo());
     }
 });
 

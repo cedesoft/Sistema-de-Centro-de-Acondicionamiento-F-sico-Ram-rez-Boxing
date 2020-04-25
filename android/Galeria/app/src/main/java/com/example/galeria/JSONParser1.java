@@ -29,7 +29,7 @@ public class JSONParser1 extends AsyncTask<Vector<String>,  Vector<String>,  Vec
 
 
         try {
-            url = new URL("http://192.168.1.71:8888/lista/titulo.php?ID="+ID+"");
+            url = new URL("http://192.168.1.68:8888/lista/titulo.php?ID="+ID+"");
         } catch (
                 MalformedURLException e) {
             e.printStackTrace();

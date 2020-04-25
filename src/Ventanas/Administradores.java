@@ -632,7 +632,7 @@ public static BufferedImage decodeToImage(String imageString) {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null, "¿Desea Salir al login?", "Exit", dialog);
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea eliminar?", "Si", dialog);
         if (result == 0) {
             eliminar();
         }

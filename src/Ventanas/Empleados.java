@@ -815,7 +815,7 @@ huella=lh.getPlantillaHuella().serialize();
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 int dialog=JOptionPane.YES_NO_OPTION;
-        int result=JOptionPane.showConfirmDialog(null, "¿Desea Salir al login?","Exit",dialog);
+        int result=JOptionPane.showConfirmDialog(null, "¿Desea eliminar el empleado?","Si",dialog);
         if (result==0) {
        eliminar();
         }
@@ -938,10 +938,7 @@ actualizar();// TODO add your handling code here:
     }//GEN-LAST:event_jTextField6KeyReleased
 
     private void jTextField5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField5FocusLost
-        if (!jTextField5.getText().matches("^[0-9]{10}?$")) {
-            JOptionPane.showMessageDialog(null,"Solo se aceptan numeros");
-            jTextField5.setText("");
-        } 
+      
     }//GEN-LAST:event_jTextField5FocusLost
 
     private void jTextField7KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyReleased
