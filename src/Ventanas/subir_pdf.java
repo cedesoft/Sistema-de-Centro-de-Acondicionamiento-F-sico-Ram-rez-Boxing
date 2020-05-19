@@ -5,14 +5,17 @@
  */
 package Ventanas;
 
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -178,6 +181,12 @@ public int getCodigopdf() {
             }
         });
         jPanel1.add(btnseleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
+
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 140, 100));
 
         jButton1.setText("Guardar");
@@ -221,7 +230,7 @@ public int getCodigopdf() {
         j.setFileFilter(fi);
         int se = j.showOpenDialog(this);
         if (se == 0) {
-            this.btnseleccionar.setText("" + j.getSelectedFile().getName());
+            this.txtname.setText("" + j.getSelectedFile().getName());
             ruta_archivo = j.getSelectedFile().getAbsolutePath();
 
         } else {
@@ -297,6 +306,47 @@ if(pdf!=null){
         } 
 }// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+String sql = "SELECT archivo, nomre FROM pdf where id = 1";
+
+        byte[] b = null;
+        String nombre = "";
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                b = rs.getBytes(1);
+                nombre = rs.getString(2);
+            }
+
+            InputStream bos = new ByteArrayInputStream(b);
+
+            int tamanoInput = bos.available();
+            byte[] datosPDF = new byte[tamanoInput];
+            bos.read(datosPDF, 0, tamanoInput);
+
+            OutputStream out = new FileOutputStream(nombre + ".pdf");
+            out.write(datosPDF);
+
+            //abrir archivo
+            out.close();
+            bos.close();
+            s.close();
+            rs.close();
+
+        } catch (IOException | NumberFormatException | SQLException ex) {
+            System.out.println("Error al abrir archivo PDF " + ex.getMessage());
+        }
+        try {
+            Desktop.getDesktop().open(new File(nombre + ".pdf"));
+            // TODO add your handling code here:
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MouseClicked
       
     
     /**

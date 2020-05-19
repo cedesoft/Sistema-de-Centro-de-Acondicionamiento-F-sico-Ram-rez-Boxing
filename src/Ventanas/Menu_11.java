@@ -62,10 +62,7 @@ public class Menu_11 extends javax.swing.JFrame {
         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/cerrar.png"));
         Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
         label_imagen.setIcon(icono);
-        this.repaint();
-        fot = new ImageIcon(getClass().getResource("/imagenes1/software-properties.png"));
-        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel7.getWidth(), jLabel7.getHeight(), Image.SCALE_DEFAULT));
-        jLabel7.setIcon(icono);
+        
 
         this.repaint();
         fot = new ImageIcon(getClass().getResource("/imagenes1/avatar.png"));
@@ -78,12 +75,6 @@ public class Menu_11 extends javax.swing.JFrame {
         jLabel5.setIcon(icono);
 
         this.repaint();
-        fot = new ImageIcon(getClass().getResource("/imagenes1/info.png"));
-        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel6.getWidth(), jLabel6.getHeight(), Image.SCALE_DEFAULT));
-        jLabel6.setIcon(icono);
-
-        this.repaint();
-
         fot = new ImageIcon(getClass().getResource("/imagenes1/trabajador-de-la-construccion.png"));
         icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel8.getWidth(), jLabel8.getHeight(), Image.SCALE_DEFAULT));
         jLabel8.setIcon(icono);
@@ -108,35 +99,20 @@ public class Menu_11 extends javax.swing.JFrame {
         icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel11.getWidth(), jLabel11.getHeight(), Image.SCALE_DEFAULT));
         jLabel11.setIcon(icono);
 
-        this.repaint();
-        fot = new ImageIcon(getClass().getResource("/imagenes1/analitica.png"));
-        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel12.getWidth(), jLabel12.getHeight(), Image.SCALE_DEFAULT));
-        jLabel12.setIcon(icono);
         
-        this.repaint();
-        fot = new ImageIcon(getClass().getResource("/imagenes1/pesa.png"));
-        icono = new ImageIcon(fot.getImage().getScaledInstance(jlbmaquina.getWidth(), jlbmaquina.getHeight(), Image.SCALE_DEFAULT));
-        jlbmaquina.setIcon(icono);
         
-        this.repaint();
-        fot = new ImageIcon(getClass().getResource("/imagenes1/tomboy.png"));
-        icono = new ImageIcon(fot.getImage().getScaledInstance(jlbmaquina1.getWidth(), jlbmaquina1.getHeight(), Image.SCALE_DEFAULT));
-        jlbmaquina1.setIcon(icono);
         
-        this.repaint();
-        fot = new ImageIcon(getClass().getResource("/imagenes1/comprar.png"));
-        icono = new ImageIcon(fot.getImage().getScaledInstance(jlbmaquina2.getWidth(), jlbmaquina2.getHeight(), Image.SCALE_DEFAULT));
-        jlbmaquina2.setIcon(icono);
-
-        this.repaint();
-        fot = new ImageIcon(getClass().getResource("/imagenes1/multimedia-photo-manager.png"));
-        icono = new ImageIcon(fot.getImage().getScaledInstance(jLabel14.getWidth(), jLabel14.getHeight(), Image.SCALE_DEFAULT));
-        jLabel14.setIcon(icono);
+        
+       
+        
+        
 
         this.repaint();
         cargarf();
         cargar();
         fecha();
+        
+        jLabel2.setVisible(false);
     }
     
     void cargarf() {
@@ -409,22 +385,25 @@ public class Menu_11 extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jlbmaquina = new javax.swing.JLabel();
-        jlbmaquina1 = new javax.swing.JLabel();
-        jlbmaquina2 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -446,7 +425,7 @@ public class Menu_11 extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(250, 234, 128));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 40, 10));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/avatar.png"))); // NOI18N
@@ -473,20 +452,6 @@ public class Menu_11 extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, 130, 110));
-
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, 100, 100));
-
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel7MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 140, 50, 40));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/carrito-de-tienda.png"))); // NOI18N
@@ -523,20 +488,12 @@ public class Menu_11 extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 210, 130, 110));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/cliente.png"))); // NOI18N
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 130, 110));
-
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 220, 160));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 0, 220, 160));
 
         jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -544,30 +501,6 @@ public class Menu_11 extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 100, 100));
-
-        jlbmaquina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/cliente.png"))); // NOI18N
-        jlbmaquina.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlbmaquinaMouseClicked(evt);
-            }
-        });
-        jPanel2.add(jlbmaquina, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 130, 110));
-
-        jlbmaquina1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/cliente.png"))); // NOI18N
-        jlbmaquina1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlbmaquina1MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jlbmaquina1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, 130, 110));
-
-        jlbmaquina2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes1/cliente.png"))); // NOI18N
-        jlbmaquina2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlbmaquina2MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jlbmaquina2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 430, 130, 110));
 
         jLabel13.setText("jLabel13");
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
@@ -591,6 +524,73 @@ public class Menu_11 extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(250, 234, 128));
         jLabel16.setText("Menu");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, -1, -1));
+
+        jMenu1.setText("Caja");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+
+        jMenu3.setText("Reportes");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Tareas");
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Maquinaria");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu5);
+
+        jMenu2.setText("Ajustes");
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setText("Cambiar Fondo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenuItem2.setText("Actualizar Mision, Vision y Valores");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("Mision, Vision, Valores");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -618,7 +618,7 @@ public class Menu_11 extends javax.swing.JFrame {
     }//GEN-LAST:event_label_imagenMouseEntered
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
+        
         this.ID = Integer.valueOf(jLabel2.getText());
         System.out.print(ID);
         cargar1();// TODO add your handling code here:
@@ -627,49 +627,6 @@ public class Menu_11 extends javax.swing.JFrame {
     private void formWindowIconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowIconified
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowIconified
-
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-
-        String sql = "SELECT archivo, nomre FROM pdf where id = 1";
-
-        byte[] b = null;
-        String nombre = "";
-        try {
-
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sql);
-            while (rs.next()) {
-                b = rs.getBytes(1);
-                nombre = rs.getString(2);
-            }
-
-            InputStream bos = new ByteArrayInputStream(b);
-
-            int tamanoInput = bos.available();
-            byte[] datosPDF = new byte[tamanoInput];
-            bos.read(datosPDF, 0, tamanoInput);
-
-            OutputStream out = new FileOutputStream(nombre + ".pdf");
-            out.write(datosPDF);
-
-            //abrir archivo
-            out.close();
-            bos.close();
-            s.close();
-            rs.close();
-
-        } catch (IOException | NumberFormatException | SQLException ex) {
-            System.out.println("Error al abrir archivo PDF " + ex.getMessage());
-        }
-        try {
-            Desktop.getDesktop().open(new File(nombre + ".pdf"));
-            // TODO add your handling code here:
-        } catch (IOException ex) {
-            Logger.getLogger(Menu_11.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
           LeerHuella_Administradores_verificar lh = new LeerHuella_Administradores_verificar(null, true,ID);
@@ -698,13 +655,6 @@ public class Menu_11 extends javax.swing.JFrame {
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel3MouseClicked
-
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-
-        subir_pdf obj = new subir_pdf();
-        obj.setVisible(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
 
@@ -742,17 +692,6 @@ public class Menu_11 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel11MouseClicked
 
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-
-        Reportes obj = new Reportes();
-        obj.jLabel2.setText(Integer.toString(ID));
-
-        obj.setVisible(true);
-        this.setVisible(false);        // TODO add your handling code here:
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel12MouseClicked
-
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
 
         subir_imagen obj = new subir_imagen();
@@ -762,33 +701,97 @@ public class Menu_11 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void jlbmaquinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbmaquinaMouseClicked
-        maquinaria obj = new maquinaria();
-        obj.jLabel2.setText(Integer.toString(ID));
-        obj.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jlbmaquinaMouseClicked
-
-    private void jlbmaquina1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbmaquina1MouseClicked
-        tareas obj = new tareas();
-        obj.jLabel2.setText(Integer.toString(ID));
-        obj.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jlbmaquina1MouseClicked
-
-    private void jlbmaquina2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbmaquina2MouseClicked
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
         Caja obj = new Caja();
         obj.jLabel2.setText(Integer.toString(ID));
         obj.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jlbmaquina2MouseClicked
+    }//GEN-LAST:event_jMenu1MouseClicked
 
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-subir_fondo obj = new subir_fondo();
+        subir_fondo obj = new subir_fondo();
         obj.jLabel3.setText(Integer.toString(ID));
         obj.setVisible(true);
         this.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        subir_fondo obj = new subir_fondo();
+        obj.jLabel3.setText(Integer.toString(ID));
+        obj.setVisible(true);
+        this.setVisible(false);  
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+         
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        String sql = "SELECT archivo, nomre FROM pdf where id = 1";
+
+        byte[] b = null;
+        String nombre = "";
+        try {
+
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                b = rs.getBytes(1);
+                nombre = rs.getString(2);
+            }
+
+            InputStream bos = new ByteArrayInputStream(b);
+
+            int tamanoInput = bos.available();
+            byte[] datosPDF = new byte[tamanoInput];
+            bos.read(datosPDF, 0, tamanoInput);
+
+            OutputStream out = new FileOutputStream(nombre + ".pdf");
+            out.write(datosPDF);
+
+            //abrir archivo
+            out.close();
+            bos.close();
+            s.close();
+            rs.close();
+
+        } catch (IOException | NumberFormatException | SQLException ex) {
+            System.out.println("Error al abrir archivo PDF " + ex.getMessage());
+        }
+        try {
+            Desktop.getDesktop().open(new File(nombre + ".pdf"));
+            // TODO add your handling code here:
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_11.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        subir_pdf obj = new subir_pdf();
+        obj.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        Reportes obj = new Reportes();
+        obj.jLabel2.setText(Integer.toString(ID));
+
+        obj.setVisible(true);
+        this.setVisible(false); 
+    }//GEN-LAST:event_jMenu3MouseClicked
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        maquinaria obj = new maquinaria();
+        obj.jLabel2.setText(Integer.toString(ID));
+        obj.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        tareas obj = new tareas();
+        obj.jLabel2.setText(Integer.toString(ID));
+        obj.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenu4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -830,7 +833,6 @@ subir_fondo obj = new subir_fondo();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     public javax.swing.JLabel jLabel15;
@@ -839,15 +841,19 @@ subir_fondo obj = new subir_fondo();
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     public javax.swing.JPanel jPanel1;
     public static javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel jlbmaquina;
-    private javax.swing.JLabel jlbmaquina1;
-    private javax.swing.JLabel jlbmaquina2;
     private javax.swing.JLabel label_imagen;
     // End of variables declaration//GEN-END:variables
 }

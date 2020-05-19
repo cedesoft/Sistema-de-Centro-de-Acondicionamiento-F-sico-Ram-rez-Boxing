@@ -82,7 +82,7 @@ cargar();
         Pago_Proovedor();
         Pago_Empleados();
         Ganancias();
-        
+        jLabel2.setVisible(false);
 
     }
 void cargar() {
@@ -242,18 +242,20 @@ public static BufferedImage decodeToImage(String imageString) {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        btnguardar = new javax.swing.JButton();
-        selec_dinero = new javax.swing.JLabel();
-        txtnombre = new javax.swing.JTextField();
         btnGanancias = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnreset = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         mostrar_ventas = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        txtnombre = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        btnguardar = new javax.swing.JButton();
+        selec_dinero = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -281,34 +283,6 @@ public static BufferedImage decodeToImage(String imageString) {
         jPanel2.setBackground(new java.awt.Color(250, 234, 128));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnguardar.setText("Guardar");
-        btnguardar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnguardarMouseEntered(evt);
-            }
-        });
-        btnguardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnguardarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, -1, -1));
-
-        selec_dinero.setText("Equipo");
-        jPanel2.add(selec_dinero, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
-
-        txtnombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtnombreActionPerformed(evt);
-            }
-        });
-        txtnombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtnombreKeyReleased(evt);
-            }
-        });
-        jPanel2.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 140, -1));
-
         btnGanancias.setText("Corte de Caja");
         btnGanancias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -331,11 +305,22 @@ public static BufferedImage decodeToImage(String imageString) {
         });
         jPanel2.add(btnreset, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 110, -1, -1));
 
-        jLabel6.setText("Iniciar Caja $");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, -1, -1));
-
         mostrar_ventas.setText("Total Ganancias:");
-        jPanel2.add(mostrar_ventas, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 460, -1, -1));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mostrar_ventas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(mostrar_ventas)
+                .addGap(0, 4, Short.MAX_VALUE))
+        );
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 460, 130, 20));
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, -1, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -370,6 +355,66 @@ public static BufferedImage decodeToImage(String imageString) {
         jScrollPane3.setViewportView(jScrollPane1);
 
         jPanel2.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 470, 320));
+
+        txtnombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnombreActionPerformed(evt);
+            }
+        });
+        txtnombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtnombreKeyReleased(evt);
+            }
+        });
+
+        jLabel6.setText("Iniciar Caja $");
+
+        btnguardar.setText("Guardar");
+        btnguardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnguardarMouseEntered(evt);
+            }
+        });
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
+
+        selec_dinero.setText("Equipo");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(17, 17, 17)
+                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(btnguardar))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(selec_dinero)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnguardar))
+                .addGap(17, 17, 17)
+                .addComponent(selec_dinero)
+                .addContainerGap())
+        );
+
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 320, 80));
 
         jLabel1.setText("jLabel1");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
@@ -508,15 +553,25 @@ public static BufferedImage decodeToImage(String imageString) {
     }//GEN-LAST:event_btnGananciasMouseEntered
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
-        JOptionPane.showMessageDialog(null,"Total caja  ----------------- $"+totalcaja+" \n"
-                                         + "Total Ventas ---------------- $"+total_ventas+"\n"
-                                         + "Suma Venta y caja ----------- $"+(total_ventas+totalcaja)+"\n"
-                                         + "----------------------------------- \n"
-                                         + "Total pago a empleados ------ $"+total_empleados+"\n"
-                                         + "Total pago a proveedores ---- $"+total_proveedores+"\n"
-                                         + "Total Pagos ----------------- $"+(total_empleados+total_proveedores)+"\n"
-                                         + "----------------------------------- \n"
-                                         + "Total ganancias ------------- $"+Total_total);
+//        JOptionPane.showMessageDialog(null,"Total caja  ----------------- $"+totalcaja+" \n"
+//                                         + "Total Ventas ---------------- $"+total_ventas+"\n"
+//                                         + "Suma Venta y caja ----------- $"+(total_ventas+totalcaja)+"\n"
+//                                         + "----------------------------------- \n"
+//                                         + "Total pago a empleados ------ $"+total_empleados+"\n"
+//                                         + "Total pago a proveedores ---- $"+total_proveedores+"\n"
+//                                         + "Total Pagos ----------------- $"+(total_empleados+total_proveedores)+"\n"
+//                                         + "----------------------------------- \n"
+//                                         + "Total ganancias ------------- $"+Total_total);
+        FacturasCaja obj=new  FacturasCaja();
+                      obj.lbl1.setText(totalcaja.toString());
+                      obj.lbl2.setText(total_ventas.toString());
+                      obj.lbl3.setText(Double.toString(totalcaja+total_ventas));
+                      obj.lbl4.setText(total_empleados.toString());
+                      obj.lbl5.setText(total_proveedores.toString());
+                      obj.lbl6.setText(Double.toString(total_empleados+total_proveedores));
+                      obj.lbl7.setText(Total_total.toString());
+ 
+                                    obj.setVisible(true); 
 
     }//GEN-LAST:event_btnresetActionPerformed
 
@@ -603,6 +658,8 @@ public static BufferedImage decodeToImage(String imageString) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

@@ -62,6 +62,8 @@ public class Membresia extends javax.swing.JFrame {
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
 cargar();
+jLabel2.setVisible(false);
+jLabel7.setVisible(false);
 jComboBox1.removeAllItems();
  jComboBox1.addItem ("Mensual");
           jComboBox1.addItem ("Bimestral");
@@ -311,7 +313,7 @@ jLabel1.setText("Tu membresia ha terminado");
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 220, 840, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Su membresia es de :");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
 
         jButton1.setText("Renovar");

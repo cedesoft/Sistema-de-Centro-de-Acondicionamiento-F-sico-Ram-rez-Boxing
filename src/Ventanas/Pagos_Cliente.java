@@ -66,6 +66,8 @@ public class Pagos_Cliente extends javax.swing.JFrame {
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
 cargarf();
+jLabel2.setVisible(false);
+jLabel7.setVisible(false);
 id();
 
          

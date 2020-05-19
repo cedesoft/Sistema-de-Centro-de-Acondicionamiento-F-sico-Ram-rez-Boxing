@@ -65,6 +65,7 @@ Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidt
 label_imagen.setIcon(icono);
 cargarf();
 mostrar();
+jLabel2.setVisible(false);
          
          
          

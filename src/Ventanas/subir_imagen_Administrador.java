@@ -58,6 +58,7 @@ label_imagen.setIcon(icono);
 
 this.repaint();
         cargarf();
+        jLabel5.setVisible(false);
     }
     void cargarf() {
     ImageIcon icon = null;

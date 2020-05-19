@@ -59,12 +59,14 @@ public class Ventas extends javax.swing.JFrame {
     public Ventas() {
         
         initComponents();
+        id();
         this.setLocationRelativeTo(null);
         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
 cargarf();
-id();
+
+jLabel2.setVisible(false);
 
          
          
@@ -88,6 +90,27 @@ id();
              }
          });modelo=(DefaultTableModel) jTable1.getModel();
         
+    }
+    public void cambio(){
+    
+     Double suma = 0.0;
+         String valor1 = "";
+      String valor2 = "";
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+             if((Boolean) jTable1.getValueAt(i, 4)){ 
+ valor1=""+jTable1.getValueAt(i, 2)+"";
+ valor2=""+jTable1.getValueAt(i, 3)+"";
+     
+ suma +=Double.parseDouble(valor1)* Double.parseDouble(valor2);} } 
+       if( jTextField3.getText().length()>0){
+        if(Double.parseDouble(jTextField3.getText())>= suma)
+        {
+jLabel5.setText("El cambio es: "+(Double.parseDouble(jTextField3.getText())-suma)+"");
+         jLabel6.setText("El total es: "+(suma)+"");
+        }
+        
+        
+    }                   
     }
     void cargarf() {
     ImageIcon icon = null;
@@ -189,6 +212,22 @@ id();
     }
     }
     
+    public void precio(){
+        String valor = jComboBox1.getSelectedItem().toString();
+        
+        String sql= "select Precio_Producto from producto  WHERE Nombre_Producto LIKE '"+valor+"%'";
+        try {
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(sql);
+            
+            while(rs.next()){
+                jPreciotx.setText(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
      public void id()
     {
     String sql= "select Nombre_Producto from producto where Habilitado is null or Habilitado = 's'";
@@ -278,20 +317,24 @@ id();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jPreciotx = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -328,29 +371,8 @@ id();
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, -1, -1));
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, -1, -1));
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, -1, -1));
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField1KeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
-            }
-        });
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 80, -1));
-
-        jLabel1.setText("Se pago con");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, -1));
 
         jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -386,7 +408,30 @@ id();
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, -1, -1));
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, -1, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jComboBox1FocusLost(evt);
+            }
+        });
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
+
+        jLabel4.setText("Cantidad");
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -404,12 +449,54 @@ id();
                 jTextField3KeyTyped(evt);
             }
         });
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, 80, -1));
 
-        jLabel4.setText("Cantidad");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, -1, -1));
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, 170, 20));
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 170, 20));
+        jLabel1.setText("Se pago con");
+
+        jLabel8.setText("Producto");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addGap(37, 37, 37)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)
+                        .addComponent(jLabel4)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 510, 60));
+        jPanel2.add(jPreciotx, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 70, 20));
+
+        jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane2MouseClicked(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -437,6 +524,27 @@ id();
         jScrollPane2.setViewportView(jScrollPane1);
 
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 540, 300));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 350, 30));
 
         jLabel7.setText("jLabel7");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
@@ -737,25 +845,10 @@ if (!jTextField3.getText().matches("^[0-9]+([.][0-9]+)?$")) {
             JOptionPane.showMessageDialog(null,"Solo se aceptan caracteres numericos");
             jTextField3.setText("");
         }
-        Double suma = 0.0;
-         String valor1 = "";
-      String valor2 = "";
-        for (int i = 0; i < jTable1.getRowCount(); i++) {
-             if((Boolean) jTable1.getValueAt(i, 4)){ 
- valor1=""+jTable1.getValueAt(i, 2)+"";
- valor2=""+jTable1.getValueAt(i, 3)+"";
-     
- suma +=Double.parseDouble(valor1)* Double.parseDouble(valor2);} } 
-       if( jTextField3.getText().length()>0){
-        if(Double.parseDouble(jTextField3.getText())>= suma)
-        {
-jLabel5.setText("El cambio es: "+(Double.parseDouble(jTextField3.getText())-suma)+"");
-         jLabel6.setText("El total es: "+(suma)+"");
-        }
-        
-// TODO add your handling code here:
+cambio();
+          
     }//GEN-LAST:event_jTextField3KeyReleased
-    }
+    
     private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3KeyTyped
@@ -766,12 +859,38 @@ jLabel5.setText("El cambio es: "+(Double.parseDouble(jTextField3.getText())-suma
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
 
+          
+          
+          
+       
+   
+      
+      Double suma1 = 0.0;
+     String valor1 = "";
+      String valor2 = "";
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+             if((Boolean) jTable1.getValueAt(i, 4)){ 
+ valor1=""+jTable1.getValueAt(i, 2)+"";
+ valor2=""+jTable1.getValueAt(i, 3)+"";
+ 
+             suma1 +=Double.parseDouble(valor1)* Double.parseDouble(valor2);}}
+        jLabel6.setText("El total es: "+(suma1)+"");
+                          cambio();
 
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTextField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3KeyPressed
+
+    private void jComboBox1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox1FocusLost
+       precio();
+    }//GEN-LAST:event_jComboBox1FocusLost
+
+    private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane2MouseClicked
     
     /**
      * @param args the command line arguments
@@ -828,8 +947,12 @@ jLabel5.setText("El cambio es: "+(Double.parseDouble(jTextField3.getText())-suma
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel jPreciotx;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

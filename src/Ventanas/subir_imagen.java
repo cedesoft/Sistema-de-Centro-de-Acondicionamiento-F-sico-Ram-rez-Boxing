@@ -55,6 +55,7 @@ label_imagen.setIcon(icono);
 this.repaint();
 cargarf();
         contar();
+        jLabel3.setVisible(false);
     }
     void cargarf() {
     ImageIcon icon = null;

@@ -81,6 +81,7 @@ cargarf();
         mostrar();
         actualizar();
         llenarcomboempleaod();
+        jLabel2.setVisible(false);
     }
  void cargarf() {
     ImageIcon icon = null;
@@ -222,7 +223,7 @@ cargarf();
     }
 
     public void desactivar() {
-        if (txttarea.getText().length() == 0 || txtdia.getText().length() == 0 ||  txtDescripcion.getText().length() == 0) {
+        if (txttarea.getText().length() == 0 ||jDateuno.getDate().toString().length() == 0 ||  txtDescripcion.getText().length() == 0) {
             btnguardar.setEnabled(false);
         } else {
             btnguardar.setEnabled(true);
@@ -312,20 +313,21 @@ cargarf();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnguardar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txttarea = new javax.swing.JTextField();
-        txtdia = new javax.swing.JTextField();
         btnborrrar = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         txtbuscar = new javax.swing.JTextField();
         btnbuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btnreset = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextArea();
+        jDateuno = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        txttarea = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         cbx_empleados = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -370,36 +372,6 @@ cargarf();
         });
         jPanel2.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, -1, -1));
 
-        jLabel3.setText("Descripcion");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, -1, -1));
-
-        jLabel4.setText("Dia");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
-
-        txttarea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txttareaActionPerformed(evt);
-            }
-        });
-        txttarea.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txttareaKeyReleased(evt);
-            }
-        });
-        jPanel2.add(txttarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 140, -1));
-
-        txtdia.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtdiaFocusLost(evt);
-            }
-        });
-        txtdia.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtdiaKeyReleased(evt);
-            }
-        });
-        jPanel2.add(txtdia, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 140, -1));
-
         btnborrrar.setText("Eliminar");
         btnborrrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -414,7 +386,7 @@ cargarf();
         jPanel2.add(btnborrrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, -1, -1));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 0, -1, -1));
+        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 0, -1, -1));
 
         txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -445,8 +417,7 @@ cargarf();
         });
         jPanel2.add(btnreset, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, -1, -1));
 
-        jLabel6.setText("Empleado");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, -1));
+        jLabel3.setText("Descripcion");
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
@@ -457,10 +428,22 @@ cargarf();
         });
         jScrollPane2.setViewportView(txtDescripcion);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 280, 80));
+        jLabel4.setText("Dia");
+
+        txttarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txttareaActionPerformed(evt);
+            }
+        });
+        txttarea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txttareaKeyReleased(evt);
+            }
+        });
 
         jLabel7.setText("Tarea");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, -1, -1));
+
+        jLabel6.setText("Empleado");
 
         cbx_empleados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbx_empleados.addActionListener(new java.awt.event.ActionListener() {
@@ -468,7 +451,58 @@ cargarf();
                 cbx_empleadosActionPerformed(evt);
             }
         });
-        jPanel2.add(cbx_empleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, -1, -1));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(24, 24, 24)
+                        .addComponent(cbx_empleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel7)
+                        .addGap(32, 32, 32)
+                        .addComponent(txttarea, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel4)
+                        .addGap(45, 45, 45)
+                        .addComponent(jDateuno, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(16, 16, 16)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 10, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(cbx_empleados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(txttarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jDateuno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel3))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 370, 160));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -549,10 +583,11 @@ cargarf();
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
         
-            String fecha = txtdia.getText().toString();
-        
+            
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        String fecha =format.format(jDateuno.getDate());
         String tarea = txttarea.getText();
-        System.out.println(fecha);
+        
         String Descripcion = txtDescripcion.getText();
      
 
@@ -584,7 +619,8 @@ cargarf();
         actualizar();
 
         txttarea.setText("");
-        txtdia.setText("");
+        jDateuno.setDate(null);
+        
         txtDescripcion.setText("");
         
 
@@ -744,10 +780,6 @@ cargarf();
         }
     }//GEN-LAST:event_txttareaKeyReleased
 
-    private void txtdiaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdiaKeyReleased
-        
-    }//GEN-LAST:event_txtdiaKeyReleased
-
     private void txtbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscarKeyReleased
         if (txtbuscar.getText().matches("^[a-zA-Z ]{1,45}?$") || txtbuscar.getText().matches("^[0-9]{1,4}?$")) {
         } else {
@@ -774,13 +806,6 @@ cargarf();
             
         }
     }//GEN-LAST:event_cbx_empleadosActionPerformed
-
-    private void txtdiaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtdiaFocusLost
-        if (!txtdia.getText().matches("^(\\d{4})(\\/|-)(0[1-9]|1[0-2])\\2([0-2][0-9]|3[0-1])$")) {
-            JOptionPane.showMessageDialog(null, "Solo se aceptan caracteres numericos");
-            txtdia.setText("");
-        }
-    }//GEN-LAST:event_txtdiaFocusLost
 
     /**
      * @param args the command line arguments
@@ -855,6 +880,7 @@ cargarf();
     private javax.swing.JButton btnreset;
     private javax.swing.JComboBox<String> cbx_empleados;
     private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateuno;
     private javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel2;
@@ -864,6 +890,7 @@ cargarf();
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -871,7 +898,6 @@ cargarf();
     private javax.swing.JLabel label_imagen;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtbuscar;
-    private javax.swing.JTextField txtdia;
     private javax.swing.JTextField txttarea;
     // End of variables declaration//GEN-END:variables
 }

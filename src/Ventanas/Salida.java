@@ -62,7 +62,8 @@ String nombre="";
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
 cargarf();
-
+jLabel7.setVisible(false);
+jLabel2.setVisible(false);
         
     }
      void cargarf() {
@@ -362,7 +363,7 @@ datos[10]=rs.getDouble(11);
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 220, 840, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Gracias por su visita");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
 
         jLabel4.setText("jLabel4");

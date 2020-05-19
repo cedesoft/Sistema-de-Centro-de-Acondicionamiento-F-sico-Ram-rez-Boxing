@@ -63,6 +63,7 @@ public class Pagos_Provedor extends javax.swing.JFrame {
         ImageIcon fot = new ImageIcon(getClass().getResource("/imagenes1/back.png"));
 Icon icono = new ImageIcon(fot.getImage().getScaledInstance(label_imagen.getWidth(), label_imagen.getHeight(), Image.SCALE_DEFAULT));
 label_imagen.setIcon(icono);
+jLabel2.setVisible(false);
 cargar();
 id();
 id1();
@@ -294,24 +295,13 @@ public static BufferedImage decodeToImage(String imageString) {
                 datos[3]=rs.getString(4);
                  datos[4]=rs.getString(5);
                 datos[5]=rs.getString(6);
-                datos[6]=false;
-               
-                
-
-                
+                datos[6]=false;   
                 modelo.addRow(datos);
-            }
-
-         
-         
+            }   
          jTable1.setModel(modelo);
      } catch (SQLException ex) {
          Logger.getLogger(Administradores.class.getName()).log(Level.SEVERE, null, ex);
-     }
-            
-         
-        
-       
+     }  
     }
     
    
@@ -328,21 +318,24 @@ public static BufferedImage decodeToImage(String imageString) {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jPanel3 = new javax.swing.JPanel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         label_imagen = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -364,41 +357,7 @@ public static BufferedImage decodeToImage(String imageString) {
 
         jPanel2.setBackground(new java.awt.Color(250, 234, 128));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton2.setText("Agregar");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton2MouseEntered(evt);
-            }
-        });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, -1, -1));
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 40, 10));
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField1KeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
-            }
-        });
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 80, -1));
-
-        jLabel1.setText("Pago");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, -1, -1));
 
         jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -420,21 +379,30 @@ public static BufferedImage decodeToImage(String imageString) {
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, -1, -1));
 
-        jButton3.setText("Pagar");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton3MouseEntered(evt);
-            }
-        });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, -1, -1));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 0, -1, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel1.setText("Pago");
 
         jLabel4.setText("Cantidad");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, -1, -1));
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
 
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -449,16 +417,57 @@ public static BufferedImage decodeToImage(String imageString) {
                 jTextField3KeyTyped(evt);
             }
         });
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 80, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
+        jLabel5.setText("Producto");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, -1, -1));
+        jLabel6.setText("Proveedor");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 0, -1, -1));
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(47, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 410, 80));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -476,6 +485,35 @@ public static BufferedImage decodeToImage(String imageString) {
         jScrollPane1.setViewportView(jScrollPane2);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 640, 350));
+
+        jButton2.setText("Agregar");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, -1, -1));
+
+        jButton3.setText("Pagar");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton3MouseEntered(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, -1, -1));
 
         jLabel3.setText("jLabel3");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 550));
@@ -552,33 +590,136 @@ this.ID = Integer.valueOf(jLabel2.getText());
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
    String valor1 = (String) jComboBox3.getSelectedItem();
-   
-      if ("Nombre_Producto".equals(valor1) ){
-        String valor = (String)jTextField2.getText();
-        String sql= "select Nombre_Producto from producto  WHERE Nombre_Producto LIKE '"+valor+"%' and Habilitado is  null";
-        try {
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sql);
-            jComboBox1.removeAllItems();
+   if ("Nombre_Producto".equals(valor1) ){
+       String valor = (String)jTextField2.getText();
+       try {
+         DefaultTableModel modelo= new DefaultTableModel();
+         
+         String sql1= "select proveedor.Nombre_Compañia, proveedor.Nombre_Proveedor, Cantidad_Dinero, Fecha_Pago, pagos_provedor.Cantidad_producto, producto.Nombre_Producto from pagos_provedor INNER JOIN proveedor ON Proveedor_Id_Provedor = proveedor.Id_Provedor INNER JOIN producto ON producto.Id_Producto = pagos_provedor.Id_producto WHere  producto.Nombre_Producto LIKE '"+valor+"%' and producto.Habilitado is null";
+         
+         jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                 null,
+                 new String [] {
+                     //Defines TODOS los nombres de las columnas que tendrá la tabla
+                     "Nombre_Compañia","Nombre_Proveedor","Cantidad_Dinero", "Fecha_Pago","Cantidad_producto", "Nombre_Producto", "Eliminar"
+                 }
+         ) {
+             Class[] types = new Class [] {
+                 //Defines el tipo que admitirá la COLUMNA, cada uno con el índice correspondiente
+                 //Codigo (Integer), Cantidad (Integer), Nombre (String), Precio(Double)
+                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class , java.lang.Boolean.class
+             };
+             
+             //Función que asignará el tipo de campo que asignaste previamente
+             public Class getColumnClass(int columnIndex) {
+                 return types [columnIndex];
+             }
+         });
+         modelo=(DefaultTableModel) jTable1.getModel();
+         
+        
+         
+       Object [] datos = new Object[7];
+         
+        
+
+         Statement s = conexion.createStatement();
+         ResultSet rs = s.executeQuery(sql1);
+         
+       
             while(rs.next()){
-                jComboBox1.addItem (rs.getString(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
-        }}        // TODO add your handling code here:
-      if ("Nombre_Proveedor".equals(valor1) ){
-        String valor = (String)jTextField2.getText();
-        String sql= "select Nombre_Proveedor from proveedor  WHERE Nombre_Proveedor LIKE '"+valor+"%' and Habilitado is  null";
-        try {
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(sql);
-            jComboBox2.removeAllItems();
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                 datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
+                datos[6]=false;   
+                modelo.addRow(datos);
+            }   
+         jTable1.setModel(modelo);
+     } catch (SQLException ex) {
+         Logger.getLogger(Administradores.class.getName()).log(Level.SEVERE, null, ex);
+     }  
+   }    
+   if ("Nombre_Proveedor".equals(valor1) ){
+       String valor = (String)jTextField2.getText();
+       try {
+         DefaultTableModel modelo= new DefaultTableModel();
+         
+         String sql1= "select proveedor.Nombre_Compañia, proveedor.Nombre_Proveedor, Cantidad_Dinero, Fecha_Pago, pagos_provedor.Cantidad_producto, producto.Nombre_Producto from pagos_provedor INNER JOIN proveedor ON Proveedor_Id_Provedor = proveedor.Id_Provedor INNER JOIN producto ON producto.Id_Producto = pagos_provedor.Id_producto WHere  proveedor.Nombre_Proveedor LIKE '"+valor+"%' and proveedor.Habilitado is null";
+         
+         jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                 null,
+                 new String [] {
+                     //Defines TODOS los nombres de las columnas que tendrá la tabla
+                     "Nombre_Compañia","Nombre_Proveedor","Cantidad_Dinero", "Fecha_Pago","Cantidad_producto", "Nombre_Producto", "Eliminar"
+                 }
+         ) {
+             Class[] types = new Class [] {
+                 //Defines el tipo que admitirá la COLUMNA, cada uno con el índice correspondiente
+                 //Codigo (Integer), Cantidad (Integer), Nombre (String), Precio(Double)
+                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class , java.lang.Boolean.class
+             };
+             
+             //Función que asignará el tipo de campo que asignaste previamente
+             public Class getColumnClass(int columnIndex) {
+                 return types [columnIndex];
+             }
+         });
+         modelo=(DefaultTableModel) jTable1.getModel();
+         
+        
+         
+       Object [] datos = new Object[7];
+         
+        
+
+         Statement s = conexion.createStatement();
+         ResultSet rs = s.executeQuery(sql1);
+         
+       
             while(rs.next()){
-                jComboBox2.addItem (rs.getString(1));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
-        }}  
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                 datos[4]=rs.getString(5);
+                datos[5]=rs.getString(6);
+                datos[6]=false;   
+                modelo.addRow(datos);
+            }   
+         jTable1.setModel(modelo);
+     } catch (SQLException ex) {
+         Logger.getLogger(Administradores.class.getName()).log(Level.SEVERE, null, ex);
+     } 
+   }
+//      if ("Nombre_Producto".equals(valor1) ){
+//        String valor = (String)jTextField2.getText();
+//        String sql= "select Nombre_Producto from producto  WHERE Nombre_Producto LIKE '"+valor+"%' and Habilitado is  null";
+//        try {
+//            Statement s = conexion.createStatement();
+//            ResultSet rs = s.executeQuery(sql);
+//            jComboBox1.removeAllItems();
+//            while(rs.next()){
+//                jComboBox1.addItem (rs.getString(1));
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
+//        }}        // TODO add your handling code here:
+//      if ("Nombre_Proveedor".equals(valor1) ){
+//        String valor = (String)jTextField2.getText();
+//        String sql= "select Nombre_Proveedor from proveedor  WHERE Nombre_Proveedor LIKE '"+valor+"%' and Habilitado is  null";
+//        try {
+//            Statement s = conexion.createStatement();
+//            ResultSet rs = s.executeQuery(sql);
+//            jComboBox2.removeAllItems();
+//            while(rs.next()){
+//                jComboBox2.addItem (rs.getString(1));
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Productos.class.getName()).log(Level.SEVERE, null, ex);
+//        }}  
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
@@ -807,8 +948,11 @@ if((c<'0'||c>'9'))evt.consume();        // TODO add your handling code here:
     public javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
